@@ -22,11 +22,23 @@ public class Recipe {
     private String description;
     private Integer cookTime;
     private Integer servingSize;
+
+    @ManyToOne
+    @JoinColumn(name = "id_meal_type", referencedColumnName = "id")
+    private MealType mealType;
+
+    @ManyToOne
+    @JoinColumn(name = "id_difficulty", referencedColumnName = "id")
+    private Difficulty difficulty;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cuisine", referencedColumnName = "id")
+    private Cuisine cuisine;
+
+    private Date createdAt;
+    private Date updatedAt;
+    private Integer dietId;
     private String image;
     private Float rating;
     private Integer views;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at")
-    private Date createdAt;
 }
