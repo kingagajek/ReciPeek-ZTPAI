@@ -1,6 +1,8 @@
 package com.recipeek.backend.controller;
 
+import com.recipeek.backend.dto.IngredientDTO;
 import com.recipeek.backend.dto.RecipeDTO;
+import com.recipeek.backend.dto.RecipeIngredientDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,40 +14,52 @@ import java.util.List;
 @RequestMapping("/api/recipes")
 public class RecipeController {
 
-    private List<RecipeDTO> recipes = new ArrayList<>(); // Tymczasowa "baza danych" do celów demonstracyjnych
-
     @GetMapping
     public List<RecipeDTO> getAllRecipes() {
-        // TODO: pobieranie dane z bazy danych
-        return recipes;
+        // TODO: pobieranie danych z bazy danych
+        return List.of(
+                new RecipeDTO()
+                        .setId(1)
+                        .setTitle("Spaghetti Carbonara")
+                        .setDescription("Klasyczne włoskie danie z boczkiem i śmietaną.")
+                        .setIngredients(List.of(
+                                new RecipeIngredientDTO()
+                                        .setIngredient(new IngredientDTO().setId(1).setName("makaron"))
+                        ))
+                        .setCookTime(30),
+                new RecipeDTO()
+                        .setId(2)
+                        .setTitle("Sushi Maki")
+                        .setDescription("Tradycyjne japońskie rolki ryżowe z rybą.")
+                        .setIngredients(List.of(
+                                new RecipeIngredientDTO()
+                                        .setIngredient(new IngredientDTO().setId(2).setName("ryż na sushi"))
+                        ))
+                       .setCookTime(90)
+        );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RecipeDTO> getRecipeById(@PathVariable Long id) {
+    public ResponseEntity<RecipeDTO> getRecipeById(@PathVariable Integer id) {
         // TODO: szukanie przepisu w bazie danych
-        return recipes.stream()
-                .filter(recipe -> recipe.getId().equals(id))
-                .findFirst()
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return null;
     }
 
     @PostMapping
-    public ResponseEntity<RecipeDTO> addRecipe(@RequestBody RecipeDTO recipeDTO) {
+    public ResponseEntity<Object> addRecipe(@RequestBody RecipeDTO recipeDTO) {
         // TODO: zapisywanie przepisu w bazie
-        recipes.add(recipeDTO);
-        return new ResponseEntity<>(recipeDTO, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Recipe created successfully.");
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RecipeDTO> updateRecipe(@PathVariable Long id, @RequestBody RecipeDTO recipeDTO) {
+    public ResponseEntity<Object> updateRecipe(@PathVariable Integer id, @RequestBody RecipeDTO recipeDTO) {
         // TODO: aktualizowanie przepisu w bazie danych
-        return ResponseEntity.ok(recipeDTO);
+        return ResponseEntity.ok("Recipe updated successfully.");
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRecipe(@PathVariable Long id) {
+    public ResponseEntity<Object> deleteRecipe(@PathVariable Integer id) {
         // TODO: usuwanie przepisu z bazy danych
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Recipe deleted successfully.");
     }
 }

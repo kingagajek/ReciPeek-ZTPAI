@@ -5,29 +5,39 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
+    private final List<UserDTO> users = new ArrayList<>();
+
     @GetMapping
-    public List<UserDTO> getAllUsers() {
-        // Metoda zwracająca wszystkich użytkowników
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        // TODO: Tylko dla admina - pobieranie wszystkich użytkowników
+        return ResponseEntity.ok(users);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<UserDTO> registerUser(@RequestBody UserDTO userDTO) {
-        // Metoda do rejestracji nowego użytkownika
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateUser(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
+        // TODO: aktualizowanie danych użytkownika
+        return ResponseEntity.ok("User updated successfully.");
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<UserDTO> loginUser(@RequestBody LoginDTO loginDTO) {
-//        // Metoda do logowania użytkownika
-//    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
+        // TODO: usuwanie użytkownika
+        return ResponseEntity.ok("User deleted successfully.");
+    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
-        // Metoda zwracająca użytkownika o danym ID
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Integer id) {
+        // TODO: szukanie użytkownika po ID
+        return users.stream()
+                .filter(user -> user.getId().equals(id))
+                .findFirst()
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
-

@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.hibernate.usertype.CompositeUserType;
+
+import java.util.List;
 
 @Data
 @Accessors(chain = true)
@@ -15,7 +18,8 @@ public class RecipeDTO {
     private String description;
     private Integer cookTime;
     private Integer servingSize;
-    private Integer mealTypeId;
-    private Integer difficultyId;
-    private Integer cuisineId;
+    private MealTypeDTO mealType;
+    private DifficultyDTO difficulty;
+    private CuisineDTO cuisine;
+    private List<RecipeIngredientDTO> ingredients;
 }
