@@ -1,4 +1,4 @@
-:root {
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -65,4 +65,75 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+} */
+
+@import "./styles/variables.css";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+span.text-peach {
+    color: var(--color-peach);
+}
+
+.button-bg-white {
+    background-color: white;
+    border: 2px solid white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: var(--color-peach-light);
+    text-decoration: none;
+    padding: 12px 32px;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    display: block;
+    box-sizing: border-box;
+    font-weight: 400;
+}
+
+.button-bg-clear {
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: white;
+    text-decoration: none;
+    padding: 12px 32px;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    font-weight: 400;
+    box-sizing: border-box;
+    display: block;
+}
+
+.button-bg-gradient {
+    border: none;
+    text-decoration: none;
+    background: linear-gradient(90deg, #FF4C2E 0%, #FF7D67 100%);
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: 12px 32px;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    font-weight: 400;
+    box-sizing: border-box;
+    display: block;
+}
+
+input[type="text"], input[type="password"], input[type="email"]  {
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px 18px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--color-black-light);
 }
