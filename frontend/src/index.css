@@ -78,11 +78,11 @@ button:focus-visible {
     box-sizing: border-box;
 }
 
-span.text-peach {
+span.textPeach {
     color: var(--color-peach);
 }
 
-.button-bg-white {
+.buttonBgWhite {
     background-color: white;
     border: 2px solid white;
     border-radius: 8px;
@@ -97,7 +97,7 @@ span.text-peach {
     font-weight: 400;
 }
 
-.button-bg-clear {
+.buttonBgClear {
     background-color: transparent;
     border: 2px solid white;
     border-radius: 8px;
@@ -112,7 +112,7 @@ span.text-peach {
     display: block;
 }
 
-.button-bg-gradient {
+.buttonBgGradient {
     border: none;
     text-decoration: none;
     background: linear-gradient(90deg, #FF4C2E 0%, #FF7D67 100%);

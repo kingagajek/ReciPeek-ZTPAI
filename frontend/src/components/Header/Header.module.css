@@ -5,7 +5,7 @@ header {
     padding: 10px 28px;
 }
 
-.header-buttons {
+.headerButtons {
     display: flex;
     gap: 8px;
 }
@@ -14,7 +14,7 @@ header {
     height: 35px;
 }
 
-.profile, .add-recipe-icon {
+.profile, .addRecipeIcon {
     filter: invert(1);
     height: 35px;
 }

@@ -6,7 +6,7 @@ body {
     background: linear-gradient(180deg, var(--color-bg-gradient-dark) 0%, var(--color-bg-gradient-light) 100%);
 }
 
-.main-container {
+.mainContainer {
     display: flex;
     align-items : center;
     text-align: center;
@@ -16,27 +16,27 @@ body {
     gap: 32px;
 }
 
-.main-container img.logo {
+.mainContainer img.logo {
     height: 33vh;
 }
 
-.main-container .buttons {
+.mainContainer .buttons {
     display: flex;
     gap: 24px;
     margin-top: 50px;
     width: 100%;
 }
 
-.main-container .buttons a {
+.mainContainer .buttons a {
     width: 50%;
 }
 
-.main-container .welcome-message h1 {
+.mainContainer .welcomeMessage h1 {
     font-size: 40px;
     letter-spacing: 3.5px;
 }
 
-.main-container .welcome-message h2 {
+.mainContainer .welcomeMessage h2 {
     font-size: 24px;
     margin-top: 8px;
     letter-spacing: 1.5px;
@@ -49,30 +49,30 @@ body {
         padding: 20px;
     }
 
-    .main-container {
+    .mainContainer {
         gap: 80px;
     }
 
-    .main-container img.logo {
+    .mainContainer img.logo {
         height: 25vh;
     }
 
-    .main-container .welcome-message h2 {
+    .mainContainer .welcomeMessage h2 {
         margin-top: 35px;
     }
 
-    .main-container .buttons {
+    .mainContainer .buttons {
         flex-direction: column;
         gap: 5px;
         margin-top: 0;
         width: 85%;
     }
 
-    .main-container .buttons a {
+    .mainContainer .buttons a {
         width: 100%;
     }
 
-    .button-bg-white, .button-bg-clear {
+    .buttonBgWhite, .buttonBgClear {
         display: block;
         padding: 15px;
         margin: 5px 0;

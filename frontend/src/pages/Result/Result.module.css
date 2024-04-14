@@ -3,12 +3,12 @@ body {
     background: var(--color-bg-gradient-light);
 }
 
-.main-container .option-buttons {
+.mainContainer .optionButtons {
     display: flex;
     gap: 24px;
 }
 
-.sort-button {
+.sortButton {
     background-color: white;
     border: none;
     border-radius: 14px;
@@ -21,7 +21,7 @@ body {
     cursor: pointer;
 }
 
-.filter-button, .filter-menu .filter-select button{
+.filterButton, .filterMenu .filterSelect button{
     background-color: var(--color-grey-dark);
     border: none;
     border-radius: 14px;
@@ -35,31 +35,31 @@ body {
     cursor: pointer;
 }
 
-.filter-menu {
+.filterMenu {
     display: none;
 }
 
-.filter-menu.active {
+.filterMenuActive {
     display: flex;
     gap: 24px;
 }
 
-.filter-menu .filter-select {
+.filterMenu .filterSelect {
     position: relative;
     width: 170px;
 }
 
-.filter-menu .filter-select button {
+.filterMenu .filterSelect button {
     width: 100%;
     background-color: white;
     color: black;
 }
 
-.filter-menu .filter-select.active button {
+.filterMenu .filterSelectActive button {
     border-radius: 14px 14px 0 0;
 }
 
-.filter-menu .filter-select .filter-options {
+.filterMenu .filterSelect .filterOptions {
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -70,11 +70,11 @@ body {
     width: 100%;
 }
 
-.filter-menu .filter-select:not(.active) .filter-options{
+.filterMenu .filterSelectNotActive .filterOptions{
     display: none;
 }
 
-.filter-menu .filter-select .filter-options .filter-option {
+.filterMenu .filterSelect .filterOptions .filterOption {
     display: flex;
     align-items: center;
     padding: 8px;
@@ -82,7 +82,7 @@ body {
     justify-content: space-between;
 }
 
-.ingredients-button {
+.ingredientsButton {
     background-color: white;
     border: none;
     border-radius: 8px;
@@ -95,7 +95,7 @@ body {
     color: var(--color-peach);
 }
 
-.main-container {
+.mainContainer {
     display: flex;
     width: 100%;
     max-width: 1700px;
@@ -106,14 +106,14 @@ body {
     margin: 0 auto;
 }
 
-.recipe-grid {
+.recipeGrid {
     display: flex;
     flex-wrap: wrap;
     gap: 32px;
     align-items: stretch;
 }
 
-.recipe-card-link {
+.recipeCardLink {
     width: calc((100% - 96px) / 4);
     text-decoration: none;
     color: inherit;
@@ -121,11 +121,11 @@ body {
     height: auto;
 }
 
-.recipe-card-link.hidden {
+.recipeCardLinkHidden {
     display: none;
 }
 
-.recipe-card {
+.recipeCard {
     display: flex;
     flex-direction: column;
     background: white;
@@ -133,7 +133,7 @@ body {
     height: 100%;
 }
 
-.recipe-picture {
+.recipePicture {
     border-radius: 8px 8px 0 0;
     width: 100%;
     height: auto;
@@ -143,87 +143,87 @@ body {
 }
 
 
-.recipe-meta {
+.recipeMeta {
     padding: 10px;
 }
 
-.recipe-title {
+.recipeTitle {
     display: flex;
     align-items: center;
     font-weight: 500;
 }
 
-.recipe-description {
+.recipeDescription {
     margin: 10px 0;
     font-weight: 400;
 }
 
-.recipe-rating {
+.recipeRating {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.star-icon {
+.starIcon {
     height: 38px;
 }
 
-.recipe-info {
+.recipeInfo {
     display: flex;
     width: 100%;
     justify-content: space-between;
 }
 
-.recipe-info-icon {
+.recipeInfoIcon {
     height: 38px;
 }
 
-.time-info, .difficulty-info {
+.timeInfo, .difficultyInfo {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
 @media (max-width: 768px) {
-    .main-container {
+    .mainContainer {
         padding: 0 28px;
         gap: 30px;
     }
 
-    .main-container .option-buttons {
+    .mainContainer .optionButtons {
         gap: 10px;
         flex-direction: column;
     }
 
-    .filter-select.active {
+    .filterSelectActive {
         z-index: 1;
     }
 
-    .sort-button, .filter-button {
+    .sortButton, .filterButton {
         width: 100%;
         padding: 0.5em;
         font-size: 1em;
     }
 
-    .filter-menu.active {
+    .filterMenuActive {
         gap: 10px;
         flex-direction: column;
     }
 
-    .filter-menu .filter-select {
+    .filterMenu .filterSelect {
         width: 100%;
     }
 
-    .recipe-grid {
+    .recipeGrid {
         display: flex;
         flex-direction: column;
     }
 
-    .recipe-card-link {
+    .recipeCardLink {
         width: 100%;
     }
 
-    .recipe-card {
+    .recipeCard {
         flex-direction: column;
     }
 }

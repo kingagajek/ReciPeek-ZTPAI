@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './EditProfile.css'
+import classes from './EditProfile.module.css';
 import Header from '../../components/Header/Header';
 import SearchBar from '../../components/SearchBar/SearchBar';
 
@@ -8,11 +8,10 @@ export default function EditProfile() {
   return (
     <>
       <Header />
-      <SearchBar />
       <main>
-        <section className="profile-edit-section">
+        <section className={classes.profileEditSection}>
           <h1>Profile</h1>
-          <div className="profile-info-container">
+          <div className={classes.profileInfoContainer}>
             <label htmlFor="username">Login</label>
             <input type="text" id="login" name="login" required />
 
@@ -29,10 +28,10 @@ export default function EditProfile() {
             <input type="password" name="confirmedPassword" />
           </div>
 
-          <div className="profile-actions">
+          <div className={classes.profileActions}>
             <button type="submit" name="save_profile">Save</button>
-            <a className="sign-out" href="/logout">Sign out</a>
-            <button type="submit" name="delete_account" className="delete-account">Delete Account</button>
+            <a className={classes.signOut} href="/logout">Sign out</a>
+            <button type="submit" name="delete_account" className={classes.deleteAccount}>Delete Account</button>
           </div>
         </section>
       </main>
