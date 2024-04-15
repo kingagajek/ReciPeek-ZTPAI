@@ -1,15 +1,11 @@
 package com.recipeek.backend.controller;
 
 import com.recipeek.backend.dto.RatingDTO;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@NoArgsConstructor
-@AllArgsConstructor
 @RequestMapping("/api/ratings")
 public class RatingController {
     @PostMapping

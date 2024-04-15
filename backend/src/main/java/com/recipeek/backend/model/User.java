@@ -2,6 +2,7 @@ package com.recipeek.backend.model;
 
 import jakarta.persistence.*;
 
+@Table(name = "users")
 @Entity
 public class User {
 

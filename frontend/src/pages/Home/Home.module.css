@@ -1,11 +1,6 @@
-body {
-    min-height: 100vh;
-    background: var(--color-bg-gradient-light);
-}
-
 .mainContainer {
     display: flex;
-    align-items : center;
+    align-items: center;
     text-align: center;
     flex-direction: column;
     padding: 28px 0;
@@ -20,101 +15,4 @@ body {
 .recipeGridTitle {
     font-weight: 700;
     margin: 24px;
-}
-
-.recipeGrid {
-    width: 100%;
-    padding: 0 80px;
-}
-
-
-.recipeCardLink {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
-
-.recipeCard {
-    background: var(--color-peach);
-    border-radius: 10px;
-    padding: 10px 10px 10px 10px;
-    margin: 0 10px;
-}
-
-.recentRecipes .recipeCard {
-    background-color: white;
-    color: var(--color-black-light);
-}
-
-.recentRecipes .recipeInfoIcon {
-    filter: unset;
-}
-
-.recipeThumbnail {
-    width: 100%;
-    aspect-ratio: 1.1/1;
-    height: auto;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-.recipeMeta {
-    display: flex;
-    flex-direction: column;
-}
-
-.recipeTitle {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 6px 0 8px 0;
-}
-
-.recipeTitle h3 {
-    text-align: left;
-    font-size: 1em;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-}
-
-.recipeRating {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-}
-
-.starIcon {
-    height: 38px;
-}
-
-.recipeInfo {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-}
-
-.recipeInfoIcon {
-    filter: invert(1);
-    height: 38px;
-}
-
-.timeInfo, .difficultyInfo {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-}
-
-@media (max-width: 768px) {
-    .recommendedRecipes .recipeGrid,
-    .recentRecipes .recipeGrid {
-        gap: 10px;
-        padding: 0 60px;
-    }
-
-    .recipeTitle h3 {
-        font-size: 0.9em;
-    }
 }

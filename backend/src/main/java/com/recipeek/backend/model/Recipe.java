@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name="author")
+@Table(name="recipe")
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
@@ -37,7 +37,9 @@ public class Recipe {
 
     private Date createdAt;
     private Date updatedAt;
-    private Integer dietId;
+    @ManyToOne
+    @JoinColumn(name = "id_diet", referencedColumnName = "id")
+    private Diet diet;
     private String image;
     private Float rating;
     private Integer views;

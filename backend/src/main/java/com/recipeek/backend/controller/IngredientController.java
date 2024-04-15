@@ -26,7 +26,7 @@ public class IngredientController {
     @GetMapping("/{id}")
     public ResponseEntity<IngredientDTO> getIngredientById(@PathVariable Integer id) {
         // TODO: pobieranie składnika o danym ID
-        return ResponseEntity.ok(new IngredientDTO()); // Tymczasowa odpowiedź
+        return ResponseEntity.ok(new IngredientDTO());
     }
 
     @PutMapping("/{id}")
