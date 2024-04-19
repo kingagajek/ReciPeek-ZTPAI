@@ -3,7 +3,7 @@ import React from 'react';
 import RecipeCard from '../RecipeCard/RecipeCard';
 import classes from './RecipeGrid.module.css';
 
-function RecipeGrid({ recipes }) {
+export default function RecipeGrid({ recipes }) {
   return (
     <div className={classes.recipeGrid}>
       {recipes.map(recipe => (
@@ -12,5 +12,3 @@ function RecipeGrid({ recipes }) {
     </div>
   );
 }
-
-export default RecipeGrid;

@@ -1,0 +1,21 @@
+.logo {
+    height: 40vh;
+  }
+  
+  .backToHome {
+    text-decoration: none;
+  }
+  
+  .logoContainer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
+  
+  .logoContainer h1 {
+    color: white;
+    font-size: 40px;
+    letter-spacing: 3.5px;
+  }
+  

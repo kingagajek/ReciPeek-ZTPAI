@@ -6,57 +6,16 @@ body {
   background: var(--color-bgGradientLight);
 }
 
-.logo {
-  height: 40vh;
-}
-
 .loginContainer {
   display: flex;
   align-items: center;
   gap: 120px;
 }
 
-.backToHome {
-  text-decoration: none;
-}
-
-.logoContainer {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  gap: 24px;
-}
-
-.logoContainer h1 {
-  color: white;
-  font-size: 40px;
-  letter-spacing: 3.5px;
-}
-
 .formContainer {
   display: flex;
   flex-direction: column;
   width: 260px;
-}
-
-.loginForm {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
-
-.formInputs {
-  display: flex;
-  flex-direction: column;
-  gap: 17px;
-}
-
-.checkboxContainer {
-  display: flex;
-  align-items: center;
-  color: var(--color-greyDark);
-  font-size: 12px;
-  letter-spacing: 1px;
 }
 
 .forgotPasswordLink {
@@ -69,53 +28,16 @@ body {
   margin-top: 20px;
 }
 
-.submitButton {
-  width: 100%;
-}
-
-.noValid {
-  border: 3px solid red;
-  border-radius: 1em;
-  box-shadow: 0 0 0.2em red;
-  outline: none;
-}
-
 @media (max-width: 768px) {
   .loginContainer {
     width: 100%;
     display: block;
   }
 
-  .logoContainer, .formContainer {
+  .formContainer {
     width: 100%;
     padding: 20px;
     gap: 10px;
-  }
-
-  .logo {
-    display: block;
-    max-height: 200px;
-  }
-
-  .loginForm {
-    gap: 20px;
-    padding: 0 20px;
-  }
-
-  input[type="text"],
-  input[type="password"],
-  input[type="email"] {
-    border-radius: 15px;
-    padding: 20px 18px;
-  }
-
-  .checkboxContainer {
-    gap: 5px;
-  }
-
-  .submitButton {
-    padding: 15px 30px;
-    border-radius: 15px;
   }
 
   .forgotPasswordLink {
