@@ -1,19 +1,36 @@
-import { useState } from 'react'
-import './App.css'
-import Header from './components/Header/Header'
-import {Outlet} from 'react-router-dom'
+import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import './App.css';
+import ProtectedRoute from './components/ProtectedRoute';
+import Home from './pages/Home/Home';
+import Login from './pages/Login/Login';
+import Register from './pages/Register/Register';
+import Welcome from './pages/Welcome/Welcome';
+import AddRecipe from './pages/AddRecipe/AddRecipe'
+import EditProfile from './pages/EditProfile/EditProfile';
+import Recipe from './pages/Recipe/Recipe';
+import Result from './pages/Result/Result';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <div>
-      {/* <Header /> */}
-      <main>
-        <Outlet />
-      </main>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/result" element={<Result />} />
+        <Route path="/recipe/" element={<Recipe />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/welcome" element={<Welcome />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/editProfile" element={<EditProfile />} />
+          <Route path="/addRecipe" element={<AddRecipe />} />
+        </Route>
+      </Routes>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

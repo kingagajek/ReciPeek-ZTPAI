@@ -5,6 +5,7 @@ import time from '../../assets/icons/time.svg';
 import difficulty from '../../assets/icons/difficulty.svg';
 import portion from '../../assets/icons/portion.svg';
 import Header from '../../components/Header/Header';
+import ImageUpload from '../../components/ImageUpload/ImageUpload';
 
 export default function AddRecipe() {
   return (
@@ -12,14 +13,7 @@ export default function AddRecipe() {
       <Header />
       <form className={classes.mainContainer} method="post" encType="multipart/form-data">
         <div className={classes.mainInfo}>
-          <div className={classes.imageUploadContainer}>
-            <div className={classes.imagePreviewContainer}></div>
-            <label htmlFor="file-upload" className={classes.imageUploadLabel}>
-              <div className={classes.imageUploadPlus}>+</div>
-              <div className={classes.imageUploadText}>Upload image</div>
-            </label>
-            <input id="file-upload" type="file" name="image" accept="image/*" style={{ display: 'none' }}/>
-          </div>
+        <ImageUpload />
           <div className={classes.mainInfoText}>
             <input className={classes.recipeTitle} type="text" name="title" placeholder="Recipe name..." required />
             <div className={classes.recipeInfo}>

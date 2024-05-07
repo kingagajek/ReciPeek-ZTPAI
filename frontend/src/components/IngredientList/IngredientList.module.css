@@ -1,0 +1,63 @@
+.ingredientsContainer {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  
+  .ingredientList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .ingredientItem {
+    display: flex;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    gap: 8px;
+    position: relative;
+}
+  
+.ingredientItem input[type="checkbox"] {
+    visibility: hidden;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+
+.ingredientItem input[type="checkbox"] + span:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 50%;
+    border: 3px solid black;
+}
+
+.ingredientItem input[type="checkbox"]:checked + span:before {
+    border: 3px solid var(--color-peach);
+}
+
+.ingredientItem input[type="checkbox"]:checked + span {
+    color: var(--color-grey-light);
+    text-decoration: line-through;
+}
+
+.ingredientItem input[type="checkbox"]:checked + span:after {
+    content: '✓';
+    position: absolute;
+    left: 6px;
+    top: 0;
+    transform: translateY(-24%) rotate(15deg);
+    color: var(--color-peach);
+    font-size: 24px;
+    font-weight: 600;
+    text-shadow: 2px 2px white, -1px -3px white, 1px 1px white;
+}

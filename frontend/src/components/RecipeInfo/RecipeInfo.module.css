@@ -1,0 +1,37 @@
+.recipeInfoContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+  }
+
+.recipeInfoItem {
+display: flex;
+align-items: center;
+gap: 8px;
+}
+ 
+.recipeInfoIcon {
+    height: 38px;
+}
+
+.recipeRating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+}
+
+.starIcon {
+    height: 24px;
+}
+
+@media (max-width: 768px) {
+    .recipeInfoContainer {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+}

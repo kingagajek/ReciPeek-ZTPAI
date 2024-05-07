@@ -1,0 +1,27 @@
+.instructionsContainer {
+    margin-top: 20px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .instructionList {
+    counter-reset: instruction-counter;
+    padding-left: 0;
+    list-style-type: none;
+  }
+  
+  .instructionItem {
+    counter-increment: instruction-counter;
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 30px;
+  }
+  
+  .instructionItem::before {
+    content: counter(instruction-counter) ".";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: bold;
+  }

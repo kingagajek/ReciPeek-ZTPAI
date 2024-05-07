@@ -1,0 +1,8 @@
+.recipeImage {
+    width: 100%;
+    max-width: 350px; /* lub inna wartość */
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
