@@ -6,22 +6,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.util.Set;
+
 @Data
 @Entity
-@Table(name="instruction")
+@Table(name = "roles")
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class Instruction {
-
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @ManyToOne
-    @JoinColumn(name = "recipe_id", referencedColumnName = "id")
-    private Recipe recipe;
-
-    private Integer stepNumber;
-    private String description;
+    @Column(unique = true)
+    private String name;
 }
