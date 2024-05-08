@@ -1,6 +1,5 @@
 package com.recipeek.backend.mapper;
 
-import com.recipeek.backend.dto.IngredientDTO;
 import com.recipeek.backend.dto.RecipeIngredientDTO;
 import com.recipeek.backend.model.RecipeIngredient;
 import org.springframework.stereotype.Component;

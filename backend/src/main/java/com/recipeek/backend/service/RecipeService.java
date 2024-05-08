@@ -57,6 +57,8 @@ public class RecipeService {
     public RecipeDTO findRecipeById(Integer id) {
         Optional<Recipe> recipe = recipeRepository.findById(id);
         return recipe.map(r -> {
+            r.setViews(r.getViews() + 1);
+            recipeRepository.save(r);
             RecipeDTO dto = recipeMapper.toDTO(r);
             dto.setIngredients(recipeIngredientRepository.findByRecipeId(id)
                     .stream()
@@ -96,4 +98,15 @@ public class RecipeService {
         }
         throw new RuntimeException("Nutrition information not found for recipe id: " + recipeId);
     }
+
+    public Page<RecipeDTO> findRecommendedRecipes(Pageable pageable) {
+        return recipeRepository.findAllByOrderByViewsDesc(pageable)
+                .map(recipeMapper::toDTO);
+    }
+
+    public Page<RecipeDTO> findRecentRecipes(Pageable pageable) {
+        return recipeRepository.findAllByOrderByCreatedAtDesc(pageable)
+                .map(recipeMapper::toDTO);
+    }
+
 }

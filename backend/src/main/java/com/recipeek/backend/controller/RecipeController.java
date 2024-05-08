@@ -58,4 +58,22 @@ public class RecipeController {
         return ResponseEntity.ok(nutrition);
     }
 
+    @GetMapping("/recommended")
+    public ResponseEntity<Page<RecipeDTO>> getRecommendedRecipes(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "5") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "views"));
+        Page<RecipeDTO> recipes = recipeService.findRecommendedRecipes(pageable);
+        return ResponseEntity.ok(recipes);
+    }
+
+    @GetMapping("/recent")
+    public ResponseEntity<Page<RecipeDTO>> getRecentRecipes(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "5") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Page<RecipeDTO> recipes = recipeService.findRecentRecipes(pageable);
+        return ResponseEntity.ok(recipes);
+    }
+
 }

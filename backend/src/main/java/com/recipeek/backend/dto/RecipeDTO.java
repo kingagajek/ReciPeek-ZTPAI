@@ -23,4 +23,5 @@ public class RecipeDTO {
     private CuisineDTO cuisine;
     private List<RecipeIngredientDTO> ingredients;
     private List<InstructionDTO> instructions;
+    private List<RatingDTO> ratings;
 }
