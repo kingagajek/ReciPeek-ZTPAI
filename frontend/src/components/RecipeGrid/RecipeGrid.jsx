@@ -1,4 +1,7 @@
 import React from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 import RecipeCard from '../RecipeCard/RecipeCard';
 import classes from './RecipeGrid.module.css';
@@ -6,18 +9,41 @@ import classes from './RecipeGrid.module.css';
 export default function RecipeGrid({ recipes }) {
   const validRecipes = Array.isArray(recipes) ? recipes : [];
 
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
+
   return (
-    <div className={classes.recipeGrid}>
-      {validRecipes.map(recipe => (
+    <Slider {...sliderSettings} className={classes.recipeGrid}>
+    {validRecipes.map(recipe => (
+      <div key={recipe.id} className={classes.slide}>
         <RecipeCard
-        key={recipe.id}
-        title={recipe.title}
-        image={recipe.image}
-        rating={recipe.rating}
-        cookTime={`${recipe.cookTime} min`}
-        level={recipe.difficulty ? recipe.difficulty.level : 'Unknown'}
-      />
-      ))}
-    </div>
+          title={recipe.title}
+          image={recipe.image}
+          rating={recipe.rating}
+          cookTime={`${recipe.cookTime} min`}
+          level={recipe.difficulty ? recipe.difficulty.level : 'Unknown'}
+        />
+      </div>
+    ))}
+  </Slider>
   );
 }

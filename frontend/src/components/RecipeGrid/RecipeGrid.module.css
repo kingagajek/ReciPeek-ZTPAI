@@ -1,8 +1,15 @@
 .recipeGrid {
     width: 100%;
     padding: 0 80px;
+    max-width: 1200px;
+    overflow: hidden;
 }
 
+.slide {
+    padding: 16px;
+    box-sizing: border-box;
+  }
+  
 @media (max-width: 768px) {
     .recipeGrid {
         gap: 10px;
