@@ -1,26 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import classes from './Home.module.css';
 import Header from '../../components/Header/Header';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import RecipeGrid from '../../components/RecipeGrid/RecipeGrid';
-// import '../../assets/images/chicken-wrap.jpg';
-
-const recommendedRecipes = [
-  {
-    id: 1,
-    title: 'Chicken Wrap',
-    image: 'chicken-wrap.jpg',
-    rating: '4.5',
-    timeRequired: '30 mins',
-    difficultyLevel: 'Easy'
-  },
-];
-
-const recentRecipes = [
-];
 
 export default function Home() {
+  const [recommendedRecipes, setRecommendedRecipes] = useState([]);
+  const [recentRecipes, setRecentRecipes] = useState([]);
+
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const responseRec = await axios.get('http://localhost:8080/api/recipes/recommended');
+        if (responseRec.data && responseRec.data.content) {
+          setRecommendedRecipes(responseRec.data.content);
+        }
+  
+        const responseRecent = await axios.get('http://localhost:8080/api/recipes/recent');
+        if (responseRecent.data && responseRecent.data.content) {
+          setRecentRecipes(responseRecent.data.content);
+        }
+      } catch (error) {
+        console.error('Failed to fetch recipes', error);
+      }
+    };
+  
+    fetchRecipes();
+  }, []);
+  
+
   return (
     <>
       <Header />

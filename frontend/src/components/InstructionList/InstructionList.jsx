@@ -8,7 +8,7 @@ const InstructionList = ({ instructions }) => {
       <ol className={classes.instructionList}>
         {instructions.map((instruction, index) => (
           <li key={index} className={classes.instructionItem}>
-            Step {instruction.stepNumber}: {instruction.description}
+            {instruction.description}
           </li>
         ))}
       </ol>

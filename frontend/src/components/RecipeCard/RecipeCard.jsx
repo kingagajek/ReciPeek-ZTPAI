@@ -2,10 +2,10 @@ import React from 'react';
 import classes from './RecipeCard.module.css';
 import star from '../../assets/icons/star.png';
 import time from '../../assets/icons/time.svg';
-import difficulty from '../../assets/icons/difficulty.svg';
+import difficultyIcon from '../../assets/icons/difficulty.svg';
 import chuj from '../../assets/images/chicken-wrap.jpg';
 
-export default function RecipeCard({ title, image, rating, timeRequired, difficultyLevel }) {
+export default function RecipeCard({ title, image, rating, cookTime, level }) {
   return (
     <div className={classes.recipeCard}>
       <img className={classes.recipeThumbnail} src={chuj} alt={title} />
@@ -20,11 +20,11 @@ export default function RecipeCard({ title, image, rating, timeRequired, difficu
         <div className={classes.recipeInfo}>
           <div className={classes.timeInfo}>
             <img className={classes.recipeInfoIcon} src={time} alt="time-icon" />
-            <span>{timeRequired}</span>
+            <span>{cookTime}</span>
           </div>
           <div className={classes.difficultyInfo}>
-            <img className={classes.recipeInfoIcon} src={difficulty} alt="difficulty-icon" />
-            <span>{difficultyLevel}</span>
+            <img className={classes.recipeInfoIcon} src={difficultyIcon} alt="difficulty-icon" />
+            <span>{level}</span>
           </div>
         </div>
       </div>
