@@ -6,8 +6,10 @@ import com.recipeek.backend.mapper.InstructionMapper;
 import com.recipeek.backend.mapper.RecipeIngredientMapper;
 import com.recipeek.backend.mapper.RecipeMapper;
 import com.recipeek.backend.mapper.NutritionMapper;
+import com.recipeek.backend.model.Instruction;
 import com.recipeek.backend.model.Nutrition;
 import com.recipeek.backend.model.Recipe;
+import com.recipeek.backend.model.RecipeIngredient;
 import com.recipeek.backend.repository.InstructionRepository;
 import com.recipeek.backend.repository.NutritionRepository;
 import com.recipeek.backend.repository.RecipeIngredientRepository;
@@ -16,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -57,7 +61,11 @@ public class RecipeService {
     public RecipeDTO findRecipeById(Integer id) {
         Optional<Recipe> recipe = recipeRepository.findById(id);
         return recipe.map(r -> {
-            r.setViews(r.getViews() + 1);
+            if (r.getViews() == null) {
+                r.setViews(1);
+            } else {
+                r.setViews(r.getViews() + 1);
+            }
             recipeRepository.save(r);
             RecipeDTO dto = recipeMapper.toDTO(r);
             dto.setIngredients(recipeIngredientRepository.findByRecipeId(id)
@@ -107,6 +115,34 @@ public class RecipeService {
     public Page<RecipeDTO> findRecentRecipes(Pageable pageable) {
         return recipeRepository.findAllByOrderByCreatedAtDesc(pageable)
                 .map(recipeMapper::toDTO);
+    }
+
+    public RecipeDTO saveRecipe(RecipeDTO recipeDTO) {
+        Recipe recipe = recipeMapper.toEntity(recipeDTO);
+
+        Recipe savedRecipe = recipeRepository.save(recipe);
+
+        if (recipeDTO.getIngredients() != null) {
+            recipeDTO.getIngredients().forEach(ingredientDTO -> {
+                RecipeIngredient ingredient = recipeIngredientMapper.toEntity(ingredientDTO);
+                ingredient.setRecipe(savedRecipe);
+                recipeIngredientRepository.save(ingredient);
+            });
+        }
+
+        if (recipeDTO.getInstructions() != null) {
+            recipeDTO.getInstructions().forEach(instructionDTO -> {
+                Instruction instruction = instructionMapper.toEntity(instructionDTO);
+                instruction.setRecipe(savedRecipe);
+                instructionRepository.save(instruction);
+            });
+        }
+
+        RecipeDTO savedRecipeDTO = recipeMapper.toDTO(savedRecipe);
+        savedRecipeDTO.setIngredients(recipeDTO.getIngredients());
+        savedRecipeDTO.setInstructions(recipeDTO.getInstructions());
+
+        return savedRecipeDTO;
     }
 
 }

@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classes from './FormInstructionsList.module.css';
 
-function FormInstructionsList() {
-  const [instructions, setInstructions] = useState([]);
-
+function FormInstructionsList({ instructions, setInstructions }) {
   const addInstruction = () => {
     const newStep = { id: instructions.length + 1, text: "" };
     setInstructions([...instructions, newStep]);
@@ -23,13 +21,15 @@ function FormInstructionsList() {
     <div className={classes.instructions}>
       <h2>Instructions</h2>
       <div id="instructions-list">
-        {instructions.map((instruction) => (
+        {instructions.map((instruction, index) => (
           <div key={instruction.id} className={classes.instructionItem}>
+            <label>Step {index + 1}</label>
             <input
               type="text"
               placeholder={`Step ${instruction.id}`}
               value={instruction.text}
               onChange={(e) => updateInstruction(instruction.id, e.target.value)}
+              className={classes.instructionInput}
             />
           </div>
         ))}

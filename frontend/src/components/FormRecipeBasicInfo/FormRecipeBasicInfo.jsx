@@ -1,22 +1,44 @@
 import React from 'react';
+
 import classes from './FormRecipeBasicInfo.module.css'
 import time from '../../assets/icons/time.svg';
-import difficulty from '../../assets/icons/difficulty.svg';
+import difficultyIcon from '../../assets/icons/difficulty.svg';
 import portion from '../../assets/icons/portion.svg';
 
-function FormRecipeBasicInfo() {
+function FormRecipeBasicInfo({ onInputChange, formData }) {
   return (
     <div className={classes.mainInfoText}>
-      <input className={classes.recipeTitle} type="text" name="title" placeholder="Recipe name..." required />
+      <input 
+        className={classes.recipeTitle} 
+        type="text" 
+        name="title" 
+        placeholder="Recipe name..."
+        value={formData.title}
+        onChange={(e) => onInputChange('title', e.target.value)} 
+        required 
+      />
 
       <div className={classes.recipeInfo}>
         <div className={classes.recipeInfoItem}>
           <img className={classes.recipeInfoIcon} src={time} alt="time-icon" />
-          <input type="number" name="cook_time" placeholder="Total time(mins)..." min="1" required />
+          <input 
+            type="number" 
+            name="cook_time" 
+            placeholder="Total time(mins)..."
+            value={formData.cookTime}
+            onChange={(e) => onInputChange('cookTime', e.target.value)}
+            min="1" 
+            required 
+          />
         </div>
         <div className={classes.recipeInfoItem}>
-          <img className={classes.recipeInfoIcon} src={difficulty} alt="difficulty-icon" />
-          <select name="difficulty" required>
+          <img className={classes.recipeInfoIcon} src={difficultyIcon} alt="difficulty-icon" />
+          <select 
+            name="level"
+            value={formData.level}
+            onChange={(e) => onInputChange('level', e.target.value)}
+            required
+          >
             <option value="">Select difficulty...</option>
             <option value="1">Easy</option>
             <option value="2">More effort</option>
@@ -25,11 +47,25 @@ function FormRecipeBasicInfo() {
         </div>
         <div className={classes.recipeInfoItem}>
           <img className={classes.recipeInfoIcon} src={portion} alt="portion-icon" />
-          <input type="number" name="serving_size" placeholder="Portions..." min="1" />
+          <input 
+            type="number" 
+            name="serving_size" 
+            placeholder="Portions..."
+            value={formData.servingSize}
+            onChange={(e) => onInputChange('servingSize', e.target.value)}
+            min="1"
+          />
         </div>
       </div>
       
-      <textarea className={classes.recipeDescription} name="description" placeholder="Add recipe description..." required></textarea>
+      <textarea 
+        className={classes.recipeDescription} 
+        name="description" 
+        placeholder="Add recipe description..."
+        value={formData.description}
+        onChange={(e) => onInputChange('description', e.target.value)}
+        required
+      ></textarea>
     </div>
   );
 }

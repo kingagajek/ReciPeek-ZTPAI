@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/recipes")
@@ -35,7 +36,8 @@ public class RecipeController {
 
     @PostMapping
     public ResponseEntity<RecipeDTO> addRecipe(@RequestBody RecipeDTO recipeDTO) {
-        return ResponseEntity.ok(recipeService.addRecipe(recipeDTO));
+        RecipeDTO savedRecipe = recipeService.saveRecipe(recipeDTO);
+        return ResponseEntity.ok(savedRecipe);
     }
 
     @PutMapping("/{id}")

@@ -29,7 +29,7 @@ const ImageUpload = ({ onImageChange }) => {
         accept="image/*"
         onChange={handleImageChange}
         className={classes.imageInput}
-        style={{ display: 'none' }}
+        style={{ display: 'none' }} 
       />
     </div>
   );

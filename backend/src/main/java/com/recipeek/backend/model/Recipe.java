@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -38,10 +39,8 @@ public class Recipe {
     @JoinColumn(name = "id_cuisine", referencedColumnName = "id")
     private Cuisine cuisine;
 
-    @Column(nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreatedDate
-    private Date createdAt;
+    @Column(nullable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
     private Date updatedAt;
     @ManyToOne
     @JoinColumn(name = "id_diet", referencedColumnName = "id")

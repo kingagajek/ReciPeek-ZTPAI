@@ -16,4 +16,15 @@ public class IngredientMapper {
         dto.setName(ingredient.getName());
         return dto;
     }
+
+    public Ingredient toEntity(IngredientDTO ingredientDTO) {
+        if (ingredientDTO == null) {
+            return null;
+        }
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId(ingredientDTO.getId());
+        ingredient.setName(ingredientDTO.getName());
+        return ingredient;
+    }
+
 }

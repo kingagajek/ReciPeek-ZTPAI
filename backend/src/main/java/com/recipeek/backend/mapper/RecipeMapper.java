@@ -1,6 +1,9 @@
 package com.recipeek.backend.mapper;
 
 import com.recipeek.backend.dto.*;
+import com.recipeek.backend.model.Cuisine;
+import com.recipeek.backend.model.Difficulty;
+import com.recipeek.backend.model.MealType;
 import com.recipeek.backend.model.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,6 +40,27 @@ public class RecipeMapper {
         recipe.setTitle(recipeDTO.getTitle());
         recipe.setDescription(recipeDTO.getDescription());
         recipe.setCookTime(recipeDTO.getCookTime());
+        recipe.setServingSize(recipeDTO.getServingSize());
+        if (recipeDTO.getDifficulty() != null) {
+            Difficulty difficulty = new Difficulty();
+            difficulty.setId(recipeDTO.getDifficulty().getId());
+            difficulty.setLevel(recipeDTO.getDifficulty().getLevel());
+            recipe.setDifficulty(difficulty);
+        }
+
+        if (recipeDTO.getMealType() != null) {
+            MealType mealType = new MealType();
+            mealType.setId(recipeDTO.getMealType().getId());
+            mealType.setName(recipeDTO.getMealType().getName());
+            recipe.setMealType(mealType);
+        }
+
+        if (recipeDTO.getCuisine() != null) {
+            Cuisine cuisine = new Cuisine();
+            cuisine.setId(recipeDTO.getCuisine().getId());
+            cuisine.setName(recipeDTO.getCuisine().getName());
+            recipe.setCuisine(cuisine);
+        }
 
         return recipe;
     }

@@ -17,4 +17,13 @@ public class RecipeIngredientMapper {
         dto.setMeasurement(recipeIngredient.getMeasurement());
         return dto;
     }
+
+    public RecipeIngredient toEntity(RecipeIngredientDTO recipeIngredientDTO) {
+        RecipeIngredient recipeIngredient = new RecipeIngredient();
+        recipeIngredient.setIngredient(ingredientMapper.toEntity(recipeIngredientDTO.getIngredient())); // Zakładając, że IngredientMapper ma metodę toEntity
+        recipeIngredient.setQuantity(recipeIngredientDTO.getQuantity());
+        recipeIngredient.setMeasurement(recipeIngredientDTO.getMeasurement());
+        return recipeIngredient;
+    }
+
 }

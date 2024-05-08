@@ -4,7 +4,6 @@
     align-items: center;
     justify-content: center;
     margin-top: 20px;
-    cursor: pointer;
 }
   
   .imageUploadLabel {
@@ -19,6 +18,7 @@
   
   .imageUploadLabel:hover {
     background-color: #e0e0e0;
+    cursor: pointer;
   }
   
   .imagePreview {
@@ -29,7 +29,7 @@
 }
   
   .imageUploadPlus {
-    font-size: 48px; /* Dopasuj wielkość do designu */
+    font-size: 48px;
     color: #888;
   }
   

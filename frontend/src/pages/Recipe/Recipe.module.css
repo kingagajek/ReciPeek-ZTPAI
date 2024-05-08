@@ -310,16 +310,6 @@ body {
     margin-bottom: 20px;
 }
 
-.submitButton {
-    margin-top: 20px;
-    width: 100%;
-    max-width: 300px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    cursor: pointer;
-    background: linear-gradient(90deg, #e53e1b 0%, #ff6f59 100%);   
-}
 
 @media (max-width: 768px) {
     .mainContainer {
