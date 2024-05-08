@@ -1,0 +1,40 @@
+.ingredients {
+    flex: 1;
+    background-color: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.ingredients h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.ingredientItem {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.ingredientInput,
+.ingredientQuantity,
+.ingredientMeasurement {
+    box-sizing: border-box;
+    width: calc(50% - 4px);
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.addIngredientBtn {
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}

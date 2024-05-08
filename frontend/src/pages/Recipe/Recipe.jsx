@@ -58,9 +58,9 @@ export default function Recipe() {
           <div className={classes.mainInfoText}>
             <h1 className={classes.RecipeTitle}>{recipeData.title}</h1>
             <RecipeInfo
-              time={recipeData.time}
-              difficulty={recipeData.difficulty}
-              servings={recipeData.servings}
+              cookTime={recipeData.cookTime}
+              level={recipeData.difficulty.level}
+              servingSize={recipeData.servingSize}
               rating={recipeData.rating}
               ratingCount={recipeData.ratingCount}
             />

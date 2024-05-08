@@ -1,0 +1,39 @@
+.mainInfoText {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 20px;
+    flex-grow: 1;
+}
+
+.recipeTitle {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+.recipeInfo {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.recipeInfoItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.recipeInfoIcon {
+    height: 30px;
+}
+
+.recipeDescription {
+    height: 100px;
+    font-size: 16px;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+    font-weight: 400;
+}

@@ -5,7 +5,7 @@ import timeIcon from '../../assets/icons/time.svg';
 import difficultyIcon from '../../assets/icons/difficulty.svg';
 import portionIcon from '../../assets/icons/portion.svg';
 
-const RecipeInfo = ({ time, difficulty, servings, rating, ratingCount }) => {
+const RecipeInfo = ({ cookTime, level, servingSize, rating, ratingCount }) => {
   return (
     <div className={classes.recipeInfoContainer}>
         {rating && (
@@ -14,24 +14,24 @@ const RecipeInfo = ({ time, difficulty, servings, rating, ratingCount }) => {
           <span>{`${rating} (${ratingCount} ratings)`}</span>
         </div>
       )}
-      {time && (
+      {cookTime && (
         <div className={classes.recipeInfoItem}>
           <img className={classes.recipeInfoIcon} src={timeIcon} alt="Time" />
-          <span>{time} mins</span>
+          <span>{cookTime} mins</span>
         </div>
       )}
 
-      {difficulty && (
+      {level && (
         <div className={classes.recipeInfoItem}>
           <img className={classes.recipeInfoIcon} src={difficultyIcon} alt="Difficulty" />
-          <span>{difficulty}</span>
+          <span>{level}</span>
         </div>
       )}
 
-      {servings && (
+      {servingSize && (
         <div className={classes.recipeInfoItem}>
           <img className={classes.recipeInfoIcon} src={portionIcon} alt="Servings" />
-          <span>{servings} servings</span>
+          <span>{servingSize} servings</span>
         </div>
       )}
     </div>
