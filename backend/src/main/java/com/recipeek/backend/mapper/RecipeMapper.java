@@ -2,10 +2,7 @@ package com.recipeek.backend.mapper;
 
 import com.recipeek.backend.dto.*;
 import com.recipeek.backend.dto.request.RecipeRequest;
-import com.recipeek.backend.model.Cuisine;
-import com.recipeek.backend.model.Difficulty;
-import com.recipeek.backend.model.MealType;
-import com.recipeek.backend.model.Recipe;
+import com.recipeek.backend.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +24,7 @@ public class RecipeMapper {
         dto.setDifficulty(new DifficultyDTO(recipe.getDifficulty().getId(), recipe.getDifficulty().getLevel()));
         dto.setMealType(new MealTypeDTO(recipe.getMealType().getId(), recipe.getMealType().getName()));
         dto.setCuisine(new CuisineDTO(recipe.getCuisine().getId(), recipe.getCuisine().getName()));
+        dto.setDiet(new DietDTO(recipe.getDiet().getId(), recipe.getDiet().getType()));
         if (recipe.getRatings() != null) {
             dto.setRatings(recipe.getRatings().stream()
                     .map(ratingMapper::toDTO)
@@ -63,36 +61,17 @@ public class RecipeMapper {
             recipe.setCuisine(cuisine);
         }
 
+        if (recipeDTO.getDiet() != null) {
+            Diet diet = new Diet();
+            diet.setId(recipeDTO.getDiet().getId());
+            diet.setType(recipeDTO.getDiet().getType());
+            recipe.setDiet(diet);
+        }
+
         return recipe;
     }
 
     public Recipe toEntity(RecipeRequest recipeRequest) {
-//        Recipe recipe = new Recipe();
-//        recipe.setId(recipeRequest.getId());
-//        recipe.setTitle(recipeRequest.getTitle());
-//        recipe.setDescription(recipeRequest.getDescription());
-//        recipe.setCookTime(recipeRequest.getCookTime());
-//        recipe.setServingSize(recipeRequest.getServingSize());
-//        if (recipeRequest.getDifficulty() != null) {
-//            Difficulty difficulty = new Difficulty();
-//            difficulty.setId(recipeRequest.getDifficulty().getId());
-//            difficulty.setLevel(recipeRequest.getDifficulty().getLevel());
-//            recipe.setDifficulty(difficulty);
-//        }
-//
-//        if (recipeRequest.getMealType() != null) {
-//            MealType mealType = new MealType();
-//            mealType.setId(recipeRequest.getMealType().getId());
-//            mealType.setName(recipeRequest.getMealType().getName());
-//            recipe.setMealType(mealType);
-//        }
-//
-//        if (recipeRequest.getCuisine() != null) {
-//            Cuisine cuisine = new Cuisine();
-//            cuisine.setId(recipeRequest.getCuisine().getId());
-//            cuisine.setName(recipeRequest.getCuisine().getName());
-//            recipe.setCuisine(cuisine);
-//        }
         return new Recipe()
                 .setTitle(recipeRequest.getTitle())
                 .setDescription(recipeRequest.getDescription())

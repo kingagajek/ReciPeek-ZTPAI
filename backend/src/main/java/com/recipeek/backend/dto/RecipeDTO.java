@@ -20,6 +20,7 @@ public class RecipeDTO {
     private MealTypeDTO mealType;
     private DifficultyDTO difficulty;
     private CuisineDTO cuisine;
+    private DietDTO diet;
     private List<RecipeIngredientDTO> ingredients;
     private List<InstructionDTO> instructions;
     private List<NutritionDTO> nutrition;

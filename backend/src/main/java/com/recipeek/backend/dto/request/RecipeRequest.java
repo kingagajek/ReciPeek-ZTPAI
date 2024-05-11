@@ -23,6 +23,7 @@ public class RecipeRequest {
     private Integer mealTypeId;
     private Integer difficultyId;
     private Integer cuisineId;
+    private Integer dietId;
     private List<RecipeIngredientRequest> ingredients;
     private List<InstructionDTO> instructions;
     private NutritionDTO nutrition;

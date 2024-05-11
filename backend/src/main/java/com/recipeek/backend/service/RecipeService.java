@@ -33,6 +33,7 @@ public class RecipeService {
     private final DifficultyRepository difficultyRepository;
     private final CuisineRepository cuisineRepository;
     private final MealTypeRepository mealTypeRepository;
+    private final DietRepository dietRepository;
     private final IngredientRepository ingredientRepository;
 
     public Page<RecipeDTO> findAllRecipes(Pageable pageable) {
@@ -108,11 +109,15 @@ public class RecipeService {
         Cuisine cuisine = cuisineRepository.findById(recipeRequest.getCuisineId())
                 .orElseThrow(() -> new RuntimeException("Cuisine not found"));
 
+        Diet diet = dietRepository.findById(recipeRequest.getDietId())
+                .orElseThrow(() -> new RuntimeException("Cuisine not found"));
+
         Difficulty difficulty = difficultyRepository.findById(recipeRequest.getDifficultyId())
                 .orElseThrow(() -> new RuntimeException("Difficulty not found"));
 
         recipe.setMealType(mealType);
         recipe.setCuisine(cuisine);
+        recipe.setDiet(diet);
         recipe.setDifficulty(difficulty);
 
         Integer saveId = recipeRepository.save(recipe).getId();

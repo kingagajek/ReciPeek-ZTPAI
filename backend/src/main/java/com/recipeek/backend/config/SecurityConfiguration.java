@@ -35,7 +35,10 @@ public class SecurityConfiguration {
                     .requestMatchers(
                             HttpMethod.GET,
                             "/api/recipes/**",
-                            "/api/ingredients/**"
+                            "/api/ingredients/**",
+                            "/api/mealTypes/**",
+                            "/api/diets/**",
+                            "/api/cuisines/**"
                     )
                     .permitAll()
                     .requestMatchers(
