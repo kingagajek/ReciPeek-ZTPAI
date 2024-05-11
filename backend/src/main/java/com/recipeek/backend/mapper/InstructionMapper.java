@@ -15,10 +15,9 @@ public class InstructionMapper {
     }
 
     public Instruction toEntity(InstructionDTO instructionDTO) {
-        Instruction instruction = new Instruction();
-        instruction.setId(instructionDTO.getId());
-        instruction.setStepNumber(instructionDTO.getStepNumber());
-        instruction.setDescription(instructionDTO.getDescription());
-        return instruction;
+        return new Instruction()
+                .setStepNumber(instructionDTO.getStepNumber())
+                .setDescription(instructionDTO.getDescription());
     }
+
 }

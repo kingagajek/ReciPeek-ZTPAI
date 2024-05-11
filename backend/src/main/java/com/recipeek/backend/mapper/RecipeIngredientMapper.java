@@ -1,6 +1,7 @@
 package com.recipeek.backend.mapper;
 
 import com.recipeek.backend.dto.RecipeIngredientDTO;
+import com.recipeek.backend.dto.request.RecipeIngredientRequest;
 import com.recipeek.backend.model.RecipeIngredient;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,16 @@ public class RecipeIngredientMapper {
 
     public RecipeIngredient toEntity(RecipeIngredientDTO recipeIngredientDTO) {
         RecipeIngredient recipeIngredient = new RecipeIngredient();
-        recipeIngredient.setIngredient(ingredientMapper.toEntity(recipeIngredientDTO.getIngredient())); // Zakładając, że IngredientMapper ma metodę toEntity
+        recipeIngredient.setIngredient(ingredientMapper.toEntity(recipeIngredientDTO.getIngredient()));
         recipeIngredient.setQuantity(recipeIngredientDTO.getQuantity());
         recipeIngredient.setMeasurement(recipeIngredientDTO.getMeasurement());
         return recipeIngredient;
+    }
+
+    public RecipeIngredient toEntity(RecipeIngredientRequest recipeIngredientReq) {
+        return new RecipeIngredient()
+                .setQuantity(recipeIngredientReq.getQuantity())
+                .setMeasurement(recipeIngredientReq.getMeasurement());
     }
 
 }

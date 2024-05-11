@@ -2,18 +2,14 @@ package com.recipeek.backend.service;
 
 import com.recipeek.backend.dto.NutritionDTO;
 import com.recipeek.backend.dto.RecipeDTO;
+import com.recipeek.backend.dto.request.RecipeRequest;
 import com.recipeek.backend.mapper.InstructionMapper;
 import com.recipeek.backend.mapper.RecipeIngredientMapper;
 import com.recipeek.backend.mapper.RecipeMapper;
 import com.recipeek.backend.mapper.NutritionMapper;
-import com.recipeek.backend.model.Instruction;
-import com.recipeek.backend.model.Nutrition;
-import com.recipeek.backend.model.Recipe;
-import com.recipeek.backend.model.RecipeIngredient;
-import com.recipeek.backend.repository.InstructionRepository;
-import com.recipeek.backend.repository.NutritionRepository;
-import com.recipeek.backend.repository.RecipeIngredientRepository;
-import com.recipeek.backend.repository.RecipeRepository;
+import com.recipeek.backend.model.*;
+import com.recipeek.backend.repository.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class RecipeService {
     private final RecipeRepository recipeRepository;
     private final NutritionRepository nutritionRepository;
@@ -33,25 +30,10 @@ public class RecipeService {
     private final NutritionMapper nutritionMapper;
     private final RecipeIngredientMapper recipeIngredientMapper;
     private final InstructionMapper instructionMapper;
-
-    @Autowired
-    public RecipeService(RecipeRepository recipeRepository,
-                         RecipeMapper recipeMapper,
-                         NutritionRepository nutritionRepository,
-                         RecipeIngredientMapper recipeIngredientMapper,
-                         InstructionMapper instructionMapper,
-                         NutritionMapper nutritionMapper,
-                         RecipeIngredientRepository recipeIngredientRepository,
-                         InstructionRepository instructionRepository) {
-        this.recipeRepository = recipeRepository;
-        this.recipeMapper = recipeMapper;
-        this.nutritionRepository = nutritionRepository;
-        this.recipeIngredientMapper = recipeIngredientMapper;
-        this.instructionMapper = instructionMapper;
-        this.nutritionMapper = nutritionMapper;
-        this.recipeIngredientRepository = recipeIngredientRepository;
-        this.instructionRepository = instructionRepository;
-    }
+    private final DifficultyRepository difficultyRepository;
+    private final CuisineRepository cuisineRepository;
+    private final MealTypeRepository mealTypeRepository;
+    private final IngredientRepository ingredientRepository;
 
     public Page<RecipeDTO> findAllRecipes(Pageable pageable) {
         return recipeRepository.findAll(pageable)
@@ -117,32 +99,55 @@ public class RecipeService {
                 .map(recipeMapper::toDTO);
     }
 
-    public RecipeDTO saveRecipe(RecipeDTO recipeDTO) {
-        Recipe recipe = recipeMapper.toEntity(recipeDTO);
+    public Integer saveRecipe(RecipeRequest recipeRequest) {
+        Recipe recipe = recipeMapper.toEntity(recipeRequest);
 
-        Recipe savedRecipe = recipeRepository.save(recipe);
+        MealType mealType = mealTypeRepository.findById(recipeRequest.getMealTypeId())
+                .orElseThrow(() -> new RuntimeException("MealType not found"));
 
-        if (recipeDTO.getIngredients() != null) {
-            recipeDTO.getIngredients().forEach(ingredientDTO -> {
-                RecipeIngredient ingredient = recipeIngredientMapper.toEntity(ingredientDTO);
-                ingredient.setRecipe(savedRecipe);
-                recipeIngredientRepository.save(ingredient);
+        Cuisine cuisine = cuisineRepository.findById(recipeRequest.getCuisineId())
+                .orElseThrow(() -> new RuntimeException("Cuisine not found"));
+
+        Difficulty difficulty = difficultyRepository.findById(recipeRequest.getDifficultyId())
+                .orElseThrow(() -> new RuntimeException("Difficulty not found"));
+
+        recipe.setMealType(mealType);
+        recipe.setCuisine(cuisine);
+        recipe.setDifficulty(difficulty);
+
+        Integer saveId = recipeRepository.save(recipe).getId();
+
+        if (recipeRequest.getIngredients() != null && !recipeRequest.getIngredients().isEmpty()) {
+            recipeRequest.getIngredients().forEach(ingredientReq -> {
+                RecipeIngredient recipeIngredient = recipeIngredientMapper.toEntity(ingredientReq);
+
+                Ingredient ingredient = ingredientRepository.findById(ingredientReq.getIngredientId())
+                        .orElseThrow(() -> new RuntimeException("Ingredient not found"));
+
+
+
+                recipeIngredient.setRecipe(recipe);
+                recipeIngredient.setIngredient(ingredient);
+
+                recipeIngredientRepository.save(recipeIngredient);
             });
         }
 
-        if (recipeDTO.getInstructions() != null) {
-            recipeDTO.getInstructions().forEach(instructionDTO -> {
+        if (recipeRequest.getInstructions() != null && !recipeRequest.getInstructions().isEmpty()) {
+            recipeRequest.getInstructions().forEach(instructionDTO -> {
                 Instruction instruction = instructionMapper.toEntity(instructionDTO);
-                instruction.setRecipe(savedRecipe);
+                instruction.setRecipe(recipe);
                 instructionRepository.save(instruction);
             });
         }
 
-        RecipeDTO savedRecipeDTO = recipeMapper.toDTO(savedRecipe);
-        savedRecipeDTO.setIngredients(recipeDTO.getIngredients());
-        savedRecipeDTO.setInstructions(recipeDTO.getInstructions());
+        if (recipeRequest.getNutrition() != null) {
+            Nutrition nutrition = nutritionMapper.toEntity(recipeRequest.getNutrition());
+            nutrition.setRecipe(recipe);
+            nutritionRepository.save(nutrition);
+        }
 
-        return savedRecipeDTO;
+        return saveId;
     }
 
 }

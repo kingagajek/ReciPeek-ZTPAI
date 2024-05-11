@@ -18,7 +18,7 @@ public class Nutrition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @OneToOne   
     @JoinColumn(name = "recipe_id", referencedColumnName = "id")
     private Recipe recipe;
 

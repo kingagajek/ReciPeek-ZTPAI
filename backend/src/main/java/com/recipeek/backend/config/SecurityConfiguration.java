@@ -4,6 +4,7 @@ import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,9 +29,19 @@ public class SecurityConfiguration {
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authorizeRequest -> authorizeRequest
                     .requestMatchers(
-                            "/api/auth/**",
+                            "api/auth/**"
+                    )
+                    .permitAll()
+                    .requestMatchers(
+                            HttpMethod.GET,
                             "/api/recipes/**",
-                            "/api/recipes/**/**"
+                            "/api/ingredients/**"
+                    )
+                    .permitAll()
+                    .requestMatchers(
+                            HttpMethod.POST,
+                            "/api/recipes/**",
+                            "/api/ingredients/**"
                     )
                     .permitAll()
                     .anyRequest()

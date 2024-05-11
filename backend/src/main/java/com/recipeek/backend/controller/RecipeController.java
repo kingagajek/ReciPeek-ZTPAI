@@ -2,6 +2,7 @@ package com.recipeek.backend.controller;
 
 import com.recipeek.backend.dto.NutritionDTO;
 import com.recipeek.backend.dto.RecipeDTO;
+import com.recipeek.backend.dto.request.RecipeRequest;
 import com.recipeek.backend.service.RecipeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -35,9 +36,9 @@ public class RecipeController {
     }
 
     @PostMapping
-    public ResponseEntity<RecipeDTO> addRecipe(@RequestBody RecipeDTO recipeDTO) {
-        RecipeDTO savedRecipe = recipeService.saveRecipe(recipeDTO);
-        return ResponseEntity.ok(savedRecipe);
+    public ResponseEntity<Integer> addRecipe(@RequestBody RecipeRequest recipeRequest) {
+        Integer savedRecipeId = recipeService.saveRecipe(recipeRequest);
+        return ResponseEntity.ok(savedRecipeId);
     }
 
     @PutMapping("/{id}")

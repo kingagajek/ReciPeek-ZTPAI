@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NutritionDTO {
-    private Integer id;
+//    private Integer id;
     private Double calories;
     private Double fat;
     private Double saturatedFat;
