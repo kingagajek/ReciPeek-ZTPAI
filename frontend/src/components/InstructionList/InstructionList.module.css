@@ -1,9 +1,15 @@
 .instructionsContainer {
-    margin-top: 20px;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
+  flex: 2;
+  background-color: white;
+  padding: 20px;
+  border-radius: 15px;
   }
+
+  .instructionsContainer h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
   
   .instructionList {
     counter-reset: instruction-counter;

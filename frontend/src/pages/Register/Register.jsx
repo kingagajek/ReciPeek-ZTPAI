@@ -10,7 +10,7 @@ import FormButton from '../../components/FormButton/FormButton';
 import LogoHeader from '../../components/LogoHeader/LogoHeader';
 
 export default function Register() {
-  const { register } = useAuth();
+  // const { register } = useAuth();
   const navigate = useNavigate();
   const [login, setLogin] = useState('');
   const [email, setEmail] = useState('');
@@ -19,9 +19,24 @@ export default function Register() {
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [error, setError] = useState('');
 
+  const register = async (login, email, password) => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/auth/register', {
+        login,
+        email,
+        password
+      });
+      console.log('Registration successful:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error during registration:', error);
+      throw error;
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-  console.log("Form submitted");
+    console.log("Form submitted");
 
     if (password !== confirmedPassword) {
       setError('Passwords do not match.');
@@ -43,7 +58,6 @@ export default function Register() {
       }
     }
   };
-  
 
   return (
     <div className={classes.loginContainer}>

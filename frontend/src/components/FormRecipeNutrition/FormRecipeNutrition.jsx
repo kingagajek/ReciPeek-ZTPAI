@@ -24,10 +24,10 @@ function FormRecipeNutrition({ onInputChange, formData }) {
         />
         <input
           type="number"
-          name="saturated_fat"
+          name="saturatedFat"
           placeholder="saturates (g)..."
-          value={formData.nutrition.saturated_fat || ''}
-          onChange={(e) => onInputChange('nutrition', { ...formData.nutrition, saturated_fat: e.target.value })}
+          value={formData.nutrition.saturatedFat || ''}
+          onChange={(e) => onInputChange('nutrition', { ...formData.nutrition, saturatedFat: e.target.value })}
           min="0" step="0.1"
         />
         <input

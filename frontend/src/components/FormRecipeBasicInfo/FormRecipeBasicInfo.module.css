@@ -2,21 +2,31 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 0 20px;
     flex-grow: 1;
 }
 
-.recipeTitle {
+.mainInfoText .recipeTitle {
     display: flex;
     align-items: center;
     font-weight: 500;
+    font-size: 14px;
 }
 
 .recipeInfo {
     display: flex;
     gap: 15px;
-    margin-bottom: 20px;
+    margin: 20px 0;
 }
+
+.infoSelect {
+    width: 100px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+  }  
 
 .recipeInfoItem {
     display: flex;

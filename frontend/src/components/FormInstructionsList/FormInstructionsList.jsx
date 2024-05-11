@@ -3,14 +3,14 @@ import classes from './FormInstructionsList.module.css';
 
 function FormInstructionsList({ instructions, setInstructions }) {
   const addInstruction = () => {
-    const newStep = { id: instructions.length + 1, text: "" };
+    const newStep = { stepNumber: instructions.length + 1, description: "" };
     setInstructions([...instructions, newStep]);
   };
 
-  const updateInstruction = (id, text) => {
+  const updateInstruction = (stepNumber, description) => {
     const updatedInstructions = instructions.map(step => {
-      if (step.id === id) {
-        return { ...step, text: text };
+      if (step.stepNumber === stepNumber) {
+        return { ...step, description: description };
       }
       return step;
     });
@@ -22,13 +22,13 @@ function FormInstructionsList({ instructions, setInstructions }) {
       <h2>Instructions</h2>
       <div id="instructions-list">
         {instructions.map((instruction, index) => (
-          <div key={instruction.id} className={classes.instructionItem}>
+          <div key={instruction.stepNumber} className={classes.instructionItem}>
             <label>Step {index + 1}</label>
             <input
               type="text"
-              placeholder={`Step ${instruction.id}`}
-              value={instruction.text}
-              onChange={(e) => updateInstruction(instruction.id, e.target.value)}
+              placeholder={`Step ${instruction.stepNumber}`}
+              value={instruction.description}
+              onChange={(e) => updateInstruction(instruction.stepNumber, e.target.value)}
               className={classes.instructionInput}
             />
           </div>

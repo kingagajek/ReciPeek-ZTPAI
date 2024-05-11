@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+import { useParams } from 'react-router-dom';
 import classes from './Recipe.module.css';
 import chickenWrap from '../../assets/images/chicken-wrap.jpg';
 import Header from '../../components/Header/Header';
@@ -12,14 +13,14 @@ import InstructionList from '../../components/InstructionList/InstructionList';
 import ImageDisplay from '../../components/ImageDisplay/ImageDisplay';
 
 export default function Recipe() {
-
+  const { id } = useParams();
   const [recipeData, setRecipeData] = useState(null);
   const [nutritionData, setNutritionData] = useState([]);
 
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/recipes/1');
+        const response = await axios.get(`http://localhost:8080/api/recipes/${id}`);
         setRecipeData(response.data);
       } catch (error) {
         console.error('Error fetching recipe', error);
@@ -27,14 +28,14 @@ export default function Recipe() {
     };
 
     fetchRecipe();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     if (!recipeData) return;
 
     const fetchNutrition = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/recipes/1/nutrition`);
+        const response = await axios.get(`http://localhost:8080/api/recipes/${id}/nutrition`);
         setNutritionData(response.data);
       } catch (error) {
         console.error('Error fetching nutrition data', error);
@@ -42,7 +43,7 @@ export default function Recipe() {
     };
 
     fetchNutrition();
-  }, [recipeData]);
+  }, [recipeData, id]);
 
   if (!recipeData) {
     return <div>Loading...</div>;
