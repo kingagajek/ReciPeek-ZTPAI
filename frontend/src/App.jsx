@@ -8,6 +8,7 @@ import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import Welcome from './pages/Welcome/Welcome';
 import AddRecipe from './pages/AddRecipe/AddRecipe'
+import AdminDashboard from './pages/AdminDashboard/AdminDashboard'
 import EditProfile from './pages/EditProfile/EditProfile';
 import Recipe from './pages/Recipe/Recipe';
 import Result from './pages/Result/Result';
@@ -27,6 +28,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/editProfile" element={<EditProfile />} />
           <Route path="/addRecipe" element={<AddRecipe />} />
+          <Route path="/adminDashboard" element={<AdminDashboard />} />
         </Route>
       </Routes>
     </div>

@@ -16,6 +16,10 @@ body {
     align-items: center;
 }
 
+.profileEditSection h1 {
+    margin-bottom: 1rem;
+}
+
 .profilePhotoContainer {
     display: flex;
     align-items: center;
@@ -41,13 +45,13 @@ body {
     margin-bottom: 0.5rem;
 }
 
-.profileInfoContainer input,
+.profileEditSection .profileInfoContainer input,
 .profileInfoContainer button {
     width: 100%;
-    padding: 0.8rem;
     border: 1px solid #ddd;
     border-radius: 8px;
     margin-bottom: 1rem;
+    font-size: 15px;
 }
 
 .profileActions {

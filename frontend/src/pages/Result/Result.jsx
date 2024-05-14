@@ -7,22 +7,22 @@ import time from '../../assets/icons/time.svg'
 import difficulty from '../../assets/icons/difficulty.svg'
 import Header from '../../components/Header/Header';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import SortAndFilterButtons from '../../components/SortAndFilterButtons/SortAndFilterButtons';
 
 export default function Result() {
+  const handleSortChange = (event) => {
+    console.log('Sorting:', event.target.value);
+  };
+
+  const handleFilterClick = () => {
+    console.log('Filters clicked');
+  };
+
   return (
     <div className={classes.mainContainer}>
-        <Header />
-        <SearchBar />
-      <div className={classes.optionButtons}>
-        <select className={classes.sortButton} name="sort" id="sort">
-          <option value="rating-DESC">Rating: highest to lowest</option>
-          <option value="rating-ASC">Rating: lowest to highest</option>
-          <option value="time-DESC">Preparation time: highest to lowest</option>
-          <option value="time-ASC">Preparation time: lowest to highest</option>
-        </select>
-        <button className={classes.filterButton}>Filters</button>
-      </div>
-
+      <Header />
+      <SearchBar />
+      <SortAndFilterButtons onSortChange={handleSortChange} onFilterClick={handleFilterClick} />
       <div className={classes.recipeGrid}>
         <a className={classes.recipeCardLink} href="/recipe?recipe_id=1">
           <div className={classes.recipeCard}>

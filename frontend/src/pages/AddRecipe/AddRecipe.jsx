@@ -20,6 +20,7 @@ export default function AddRecipe() {
     servingSize: 0,
     mealTypeId: 1,
     cuisineId: 1,
+    dietId: 1,
     nutrition: {},
     ingredients: [],
     instructions: []

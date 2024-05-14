@@ -1,0 +1,66 @@
+.addButton {
+    background-color: var(--color-peach);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: block;
+    width: auto;
+}
+
+.tableContainer {
+    width: 100%;
+    margin: 0 auto;
+    background-color: var(--color-bg-gradient-light);
+}
+
+.table th, .table td {
+    border-bottom: 2px solid var(--color-peach);
+    padding: 18px 36px;
+}
+
+.table th {
+    background-color: var(--color-peach);
+    color: white;
+    font-size: 18px;
+}
+
+.table td {
+    color: var(--color-black-light);
+    font-size: 16px;
+}
+
+.editButton, .deleteButton {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.editButton {
+    background-color: var(--color-grey-light);
+    color: black;
+}
+
+.deleteButton {
+    background-color: var(--color-peach);
+    color: white;
+}
+
+.editButton:hover {
+    background-color: var(--color-grey-dark);
+}
+
+.deleteButton:hover {
+    background-color: var(--color-peach-light);
+}
+
+.actionCells {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

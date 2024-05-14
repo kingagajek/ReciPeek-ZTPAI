@@ -4,8 +4,11 @@ import starIcon from '../../assets/icons/star.png';
 import timeIcon from '../../assets/icons/time.svg';
 import difficultyIcon from '../../assets/icons/difficulty.svg';
 import portionIcon from '../../assets/icons/portion.svg';
+import cuisineIcon from '../../assets/icons/cuisine.svg';
+import dietIcon from '../../assets/icons/diet.svg';
+import mealTypeIcon from '../../assets/icons/mealType.svg';
 
-const RecipeInfo = ({ cookTime, level, servingSize, rating, ratingCount }) => {
+const RecipeInfo = ({ cookTime, level, servingSize, rating, ratingCount, cuisine, diet, mealType }) => {
   return (
     <div className={classes.recipeInfoContainer}>
         {rating && (
@@ -34,6 +37,27 @@ const RecipeInfo = ({ cookTime, level, servingSize, rating, ratingCount }) => {
           <span>{servingSize} servings</span>
         </div>
       )}
+
+      {/* {cuisine && (
+        <div className={classes.recipeInfoItem}>
+          <img className={classes.recipeInfoIcon} src={cuisineIcon} alt="Cuisine" />
+          <span>{cuisine}</span>
+        </div>
+      )}
+
+      {diet && (
+        <div className={classes.recipeInfoItem}>
+          <img className={classes.recipeInfoIcon} src={dietIcon} alt="Diet" />
+          <span>{diet}</span>
+        </div>
+      )}
+
+      {mealType && (
+        <div className={classes.recipeInfoItem}>
+          <img className={classes.recipeInfoIcon} src={mealTypeIcon} alt="Meal Type" />
+          <span>{mealType}</span>
+        </div>
+      )} */}
     </div>
   );
 };

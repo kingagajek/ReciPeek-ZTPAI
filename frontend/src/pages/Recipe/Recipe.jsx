@@ -62,6 +62,9 @@ export default function Recipe() {
               cookTime={recipeData.cookTime}
               level={recipeData.difficulty.level}
               servingSize={recipeData.servingSize}
+              // cuisine={recipeData.cuisine.name}
+              // diet={recipeData.diet.type}
+              // mealType={recipeData.mealType.name}
               rating={recipeData.rating}
               ratingCount={recipeData.ratingCount}
             />

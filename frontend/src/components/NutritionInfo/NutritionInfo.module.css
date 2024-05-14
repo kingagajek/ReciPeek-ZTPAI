@@ -3,6 +3,11 @@
     font-size: 1em;
     font-weight: 600;
 }
+
+.nutritionInfo h3 {
+  margin-bottom: 20px;
+}
+
   .nutritionDetails {
     display: flex;
     flex-wrap: wrap;

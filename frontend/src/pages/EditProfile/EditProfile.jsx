@@ -2,9 +2,13 @@ import React from 'react';
 
 import classes from './EditProfile.module.css';
 import Header from '../../components/Header/Header';
-import SearchBar from '../../components/SearchBar/SearchBar';
+import FormInput from '../../components/FormInput/FormInput';
 
 export default function EditProfile() {
+  const handleChange = (e) => {
+    console.log(e.target.name, e.target.value);
+  };
+
   return (
     <>
       <Header />
@@ -12,20 +16,11 @@ export default function EditProfile() {
         <section className={classes.profileEditSection}>
           <h1>Profile</h1>
           <div className={classes.profileInfoContainer}>
-            <label htmlFor="username">Login</label>
-            <input type="text" id="login" name="login" required />
-
-            <label htmlFor="email">Email</label>
-            <input type="email" id="email" name="email" required />
-
-            <label htmlFor="currentPassword">Current password</label>
-            <input type="password" name="currentPassword" />
-
-            <label htmlFor="newPassword">New password</label>
-            <input type="password" name="newPassword" />
-
-            <label htmlFor="confirmedPassword">New password again</label>
-            <input type="password" name="confirmedPassword" />
+            <FormInput type="text" placeholder="Login" name="login" required onChange={handleChange} />
+            <FormInput type="email" placeholder="Email" name="email" required onChange={handleChange} />
+            <FormInput type="password" placeholder="Current password" name="currentPassword" onChange={handleChange} />
+            <FormInput type="password" placeholder="New password" name="newPassword" onChange={handleChange} />
+            <FormInput type="password" placeholder="Confirm new password" name="confirmedPassword" onChange={handleChange} />
           </div>
 
           <div className={classes.profileActions}>

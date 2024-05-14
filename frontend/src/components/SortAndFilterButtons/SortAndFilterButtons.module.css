@@ -1,0 +1,78 @@
+.optionButtons {
+    display: flex;
+    gap: 24px;
+}
+
+.sortButton {
+    background-color: white;
+    border: none;
+    border-radius: 14px;
+    text-decoration: none;
+    padding: 16px 32px;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 1px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.filterButton, .filterMenu .filterSelect button{
+    background-color: var(--color-grey-dark);
+    border: none;
+    border-radius: 14px;
+    text-decoration: none;
+    padding: 16px 32px;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 1px;
+    box-sizing: border-box;
+    color: white;
+    cursor: pointer;
+}
+
+.filterMenu {
+    display: none;
+}
+
+.filterMenuActive {
+    display: flex;
+    gap: 24px;
+}
+
+.filterMenu .filterSelect {
+    position: relative;
+    width: 170px;
+}
+
+.filterMenu .filterSelect button {
+    width: 100%;
+    background-color: white;
+    color: black;
+}
+
+.filterMenu .filterSelectActive button {
+    border-radius: 14px 14px 0 0;
+}
+
+.filterMenu .filterSelect .filterOptions {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border-radius: 0 0 14px 14px;
+    width: 100%;
+}
+
+.filterMenu .filterSelectNotActive .filterOptions{
+    display: none;
+}
+
+.filterMenu .filterSelect .filterOptions .filterOption {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    color: black;
+    justify-content: space-between;
+}
