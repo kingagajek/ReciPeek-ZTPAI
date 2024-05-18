@@ -3,8 +3,12 @@ import classes from './AdminTable.module.css';
 
 const AdminTable = ({ data, columns, onEdit, onDelete, addNewText, onAddNew }) => {
   return (
-    <div>
-      <button className={classes.addButton} onClick={onAddNew}>{addNewText}</button>
+    <div  className={classes.tableContainer }>
+      {addNewText && (
+        <button className={classes.addButton} onClick={onAddNew}>
+          {addNewText}
+        </button>
+      )}
       <table className={classes.table}>
         <thead>
         <tr>

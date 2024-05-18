@@ -36,6 +36,7 @@ public class SecurityConfiguration {
                             HttpMethod.GET,
                             "/api/recipes/**",
                             "/api/ingredients/**",
+                            "/api/users/**",
                             "/api/mealTypes/**",
                             "/api/diets/**",
                             "/api/cuisines/**"
@@ -44,7 +45,31 @@ public class SecurityConfiguration {
                     .requestMatchers(
                             HttpMethod.POST,
                             "/api/recipes/**",
-                            "/api/ingredients/**"
+                            "/api/ingredients/**",
+                            "/api/users/**",
+                            "/api/mealTypes/**",
+                            "/api/diets/**",
+                            "/api/cuisines/**"
+                    )
+                    .permitAll()
+                    .requestMatchers(
+                            HttpMethod.PUT,
+                            "/api/recipes/**",
+                            "/api/ingredients/**",
+                            "/api/users/**",
+                            "/api/mealTypes/**",
+                            "/api/diets/**",
+                            "/api/cuisines/**"
+                    )
+                    .permitAll()
+                    .requestMatchers(
+                            HttpMethod.DELETE,
+                            "/api/recipes/**",
+                            "/api/ingredients/**",
+                            "/api/users/**",
+                            "/api/mealTypes/**",
+                            "/api/diets/**",
+                            "/api/cuisines/**"
                     )
                     .permitAll()
                     .anyRequest()

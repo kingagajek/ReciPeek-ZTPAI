@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import classes from '../Recipe/Recipe.module.css';
 import Header from '../../components/Header/Header';
@@ -12,6 +12,8 @@ import FormInstructionsList from '../../components/FormInstructionsList/FormInst
 import FormButton from '../../components/FormButton/FormButton';
 
 export default function AddRecipe() {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [recipeData, setRecipeData] = useState({
     title: "",
     description: "",
@@ -25,8 +27,37 @@ export default function AddRecipe() {
     ingredients: [],
     instructions: []
   });
+
+  useEffect(() => {
+    if (id) {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`http://localhost:8080/api/recipes/${id}`);
+          setRecipeData({ ...response.data });
+        } catch (error) {
+          console.error('Error fetching recipe data:', error);
+        }
+      };
+      fetchData();
+    }
+  }, [id]);
+
   
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (!recipeData) return;
+
+    const fetchNutrition = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/recipes/${id}/nutrition`);
+        setRecipeData({ ...recipeData, nutrition: { ...response.data }})
+
+      } catch (error) {
+        console.error('Error fetching nutrition data', error);
+      }
+    };
+
+    fetchNutrition();
+  }, [recipeData, id]);
 
   const handleInputChange = (field, value) => {
     if (field === 'cookTime' || field === 'servingSize') {
@@ -44,13 +75,19 @@ export default function AddRecipe() {
       ingredients: recipeData.ingredients.map(ing => ({ ...ing, quantity: parseFloat(ing.quantity) })),
       instructions: recipeData.instructions.map(ins => ({ stepNumber: ins.stepNumber, description: ins.description }))
     };
+
     try {
-      const response = await axios.post('http://localhost:8080/api/recipes', formattedData);
-      console.log("Response Data:", response.data); 
-      if (response.data && response.status === 200) {
-        navigate(`/recipe/${response.data}`);
+      let response;
+      if (id) {
+        response = await axios.put(`http://localhost:8080/api/recipes/${id}`, formattedData);
       } else {
-        throw new Error('No ID returned from server');
+        response = await axios.post('http://localhost:8080/api/recipes', formattedData);
+      }
+
+      if (response.data && response.status === 200) {
+        navigate(`/recipe/${response.data.id || id}`);
+      } else {
+        throw new Error('Failed to save recipe');
       }
     } catch (error) {
       console.error('Failed to submit recipe', error);
@@ -77,7 +114,7 @@ export default function AddRecipe() {
           </div>
         </div>
         <div className={classes.recipeContent}>
-          <FormIngredientsList onIngredientsChange={handleIngredientsChange} />
+          <FormIngredientsList currentIngredients={recipeData.ingredients} onIngredientsChange={handleIngredientsChange} />
           <FormInstructionsList instructions={recipeData.instructions} setInstructions={handleInstructionsChange} />
         </div>
         <FormButton type="submit" className="buttonBgGradient">Submit Recipe</FormButton>

@@ -1,6 +1,10 @@
 package com.recipeek.backend.controller;
 
 import com.recipeek.backend.dto.UserDTO;
+import com.recipeek.backend.model.Role;
+import com.recipeek.backend.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,35 +13,54 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/users")
+@RequiredArgsConstructor
 public class UserController {
 
-    private final List<UserDTO> users = new ArrayList<>();
-
+    private final UserService userService;
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
-        // TODO: Tylko dla admina - pobieranie wszystkich użytkowników
+        List<UserDTO> users = userService.findAllUsers();
         return ResponseEntity.ok(users);
+    }
+    @PostMapping
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+        UserDTO newUser = userService.addUser(userDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
-        // TODO: aktualizowanie danych użytkownika
-        return ResponseEntity.ok("User updated successfully.");
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
-        // TODO: usuwanie użytkownika
-        return ResponseEntity.ok("User deleted successfully.");
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
+        UserDTO updatedUser = userService.updateUser(id, userDTO);
+        if (updatedUser != null) {
+            return ResponseEntity.ok(updatedUser);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Integer id) {
-        // TODO: szukanie użytkownika po ID
-        return users.stream()
-                .filter(user -> user.getId().equals(id))
-                .findFirst()
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        UserDTO user = userService.findUserById(id);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+        boolean isDeleted = userService.deleteUser(id);
+        if (isDeleted) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/roles")
+    public ResponseEntity<List<Role>> getAllRoles() {
+        List<Role> roles = userService.findAllRoles();
+        return ResponseEntity.ok(roles);
     }
 }

@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import Header from '../../components/Header/Header';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import AdminTable from '../../components/AdminTable/AdminTable';
+import EditModal from '../../components/EditModal/EditModal';
 import classes from './AdminDashboard.module.css';
 
 const AdminDashboard = () => {
+    const navigate = useNavigate();
     const [activeModule, setActiveModule] = useState('users');
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [editItem, setEditItem] = useState(null);
+    const [showModal, setShowModal] = useState(false);
 
     const fetchData = async (module) => {
         try {
@@ -47,7 +52,11 @@ const AdminDashboard = () => {
 
     useEffect(() => {
         fetchData(activeModule).then(dataFetched => {
-            setData(dataFetched);
+            if (dataFetched.content) {
+                setData(dataFetched.content);
+            } else {
+                setData(dataFetched);
+            }
         });
     }, [activeModule]);
 
@@ -56,7 +65,7 @@ const AdminDashboard = () => {
             case 'users':
                 return [
                     { key: 'id', title: 'ID' },
-                    { key: 'name', title: 'Name' },
+                    { key: 'login', title: 'Login' },
                     { key: 'email', title: 'Email' }
                 ];
             case 'ingredients':
@@ -93,16 +102,159 @@ const AdminDashboard = () => {
 
     const columns = columnsForModule(activeModule);
 
-      const handleEditUser = (userId) => {
-        console.log('Editing user:', userId);
+    const handleEditItem = async (id) => {
+        if (activeModule === 'recipes') {
+            navigate(`/addRecipe/${id}`);
+        } else {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/${activeModule}/${id}`);
+                setEditItem(response.data);
+                setShowModal(true);
+            } catch (error) {
+                console.error(`Error fetching ${activeModule} with ID: ${id}`, error);
+            }
+        }
     };
 
-    const handleDeleteUser = (userId) => {
-        console.log('Deleting user:', userId);
+    const handleDeleteItem = async (id) => {
+        try {
+            let url = '';
+            switch (activeModule) {
+                case 'users':
+                    url = `/api/users/${id}`;
+                    break;
+                case 'ingredients':
+                    url = `/api/ingredients/${id}`;
+                    break;
+                case 'diets':
+                    url = `/api/diets/${id}`;
+                    break;
+                case 'cuisines':
+                    url = `/api/cuisines/${id}`;
+                    break;
+                case 'mealTypes':
+                    url = `/api/mealTypes/${id}`;
+                    break;
+                case 'recipes':
+                    url = `/api/recipes/${id}`;
+                    break;
+                default:
+                    throw new Error('Invalid module for deletion');
+            }
+            await axios.delete(`http://localhost:8080${url}`);
+            setData(data.filter(item => item.id !== id));
+        } catch (error) {
+            console.error('Error deleting item:', error);
+        }
     };
 
-    const handleAddNewUser = () => {
-        console.log('Adding new user');
+    const handleAddNewItem = () => {
+        if (activeModule === 'recipes') {
+            navigate('/addRecipe');
+        } else if (activeModule !== 'users') {
+            let newItem = { id: '' };
+            switch (activeModule) {
+                case 'ingredients':
+                    newItem = { name: '' };
+                    break;
+                case 'diets':
+                    newItem = { type: '' };
+                    break;
+                case 'cuisines':
+                    newItem = { name: '' };
+                    break;
+                case 'mealTypes':
+                    newItem = { name: '' };
+                    break;
+                default:
+                    console.error('Invalid module for adding new item');
+                    return;
+            }
+            setEditItem(newItem);
+            setShowModal(true);
+        }
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setEditItem(null);
+    };
+
+    const handleSaveItem = async () => {
+        try {
+            let url = '';
+            let payload = {};
+            switch (activeModule) {
+                case 'users':
+                    url = `/api/users`;
+                    if (!editItem.login || !editItem.email || !editItem.role.id) {
+                        alert('Login, Email, and Role are required');
+                        return;
+                    }
+                    payload = {
+                        login: editItem.login,
+                        email: editItem.email,
+                        role: { id: editItem.role.id }
+                    };
+                    break;
+                case 'ingredients':
+                    url = `/api/ingredients`;
+                    if (!editItem.name) {
+                        alert('Name is required');
+                        return;
+                    }
+                    payload = editItem;
+                    break;
+                case 'diets':
+                    url = `/api/diets`;
+                    if (!editItem.type) {
+                        alert('Type is required');
+                        return;
+                    }
+                    payload = editItem;
+                    break;
+                case 'cuisines':
+                    url = `/api/cuisines`;
+                    if (!editItem.name) {
+                        alert('Name is required');
+                        return;
+                    }
+                    payload = editItem;
+                    break;
+                case 'mealTypes':
+                    url = `/api/mealTypes`;
+                    if (!editItem.name) {
+                        alert('Name is required');
+                        return;
+                    }
+                    payload = editItem;
+                    break;
+                default:
+                    throw new Error('Invalid module for saving');
+            }
+
+            if (editItem.id) {
+                await axios.put(`http://localhost:8080${url}/${editItem.id}`, payload);
+            } else {
+                await axios.post(`http://localhost:8080${url}`, payload);
+            }
+
+            setShowModal(false);
+            setEditItem(null);
+            fetchData(activeModule).then(dataFetched => {
+                if (dataFetched.content) {
+                    setData(dataFetched.content);
+                } else {
+                    setData(dataFetched);
+                }
+            });
+        } catch (error) {
+            console.error('Error saving item:', error);
+        }
+    };
+
+    const handleEditInputChange = (field, value) => {
+        setEditItem({ ...editItem, [field]: value });
     };
 
     return (
@@ -110,16 +262,23 @@ const AdminDashboard = () => {
             {/* <Header /> */}
             <Sidebar activeModule={activeModule} setActiveModule={setActiveModule} />
             <div className={classes.mainContent}>
-                <div>Active Module: {activeModule}</div>
                 <AdminTable
                     data={data}
                     columns={columns}
-                    onEdit={handleEditUser}
-                    onDelete={handleDeleteUser}
-                    addNewText={`Add New ${activeModule}`}
-                    onAddNew={handleAddNewUser}
+                    onEdit={handleEditItem}
+                    onDelete={handleDeleteItem}
+                    addNewText={activeModule !== 'users' ? `Add new ${activeModule}` : null}
+                    onAddNew={activeModule !== 'users' ? handleAddNewItem : null}
                 />
             </div>
+            <EditModal
+                open={showModal}
+                onClose={handleCloseModal}
+                item={editItem}
+                onChange={handleEditInputChange}
+                onSave={handleSaveItem}
+                activeModule={activeModule}
+            />
         </div>
     );
 };

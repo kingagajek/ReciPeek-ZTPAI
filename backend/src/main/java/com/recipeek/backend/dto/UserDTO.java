@@ -1,5 +1,6 @@
 package com.recipeek.backend.dto;
 
+import com.recipeek.backend.model.Role;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -13,4 +14,5 @@ public class UserDTO {
     private Integer id;
     private String email;
     private String login;
+    private Role role;
 }

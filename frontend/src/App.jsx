@@ -28,6 +28,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/editProfile" element={<EditProfile />} />
           <Route path="/addRecipe" element={<AddRecipe />} />
+          <Route path="/addRecipe/:id" element={<AddRecipe />} />
           <Route path="/adminDashboard" element={<AdminDashboard />} />
         </Route>
       </Routes>

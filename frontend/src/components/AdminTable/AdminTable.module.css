@@ -1,3 +1,16 @@
+.tableContainer {
+    width: 100%;
+    margin: 0 auto;
+    background-color: var(--color-bg-gradient-light);
+    overflow-x: auto;
+    margin: 20px 0;
+}
+
+.table {
+    width: 100%;
+    min-width: 800px;
+}
+
 .addButton {
     background-color: var(--color-peach);
     color: white;
@@ -8,12 +21,6 @@
     margin-bottom: 20px;
     display: block;
     width: auto;
-}
-
-.tableContainer {
-    width: 100%;
-    margin: 0 auto;
-    background-color: var(--color-bg-gradient-light);
 }
 
 .table th, .table td {
@@ -30,6 +37,7 @@
 .table td {
     color: var(--color-black-light);
     font-size: 16px;
+    text-align: center;
 }
 
 .editButton, .deleteButton {
