@@ -1,10 +1,14 @@
 package com.recipeek.backend.service;
 
+import com.recipeek.backend.dto.RecipeDTO;
 import com.recipeek.backend.dto.UserDTO;
+import com.recipeek.backend.mapper.RecipeMapper;
 import com.recipeek.backend.mapper.UserMapper;
 import com.recipeek.backend.model.Role;
 import com.recipeek.backend.model.User;
+import com.recipeek.backend.model.UserRecipe;
 import com.recipeek.backend.repository.RoleRepository;
+import com.recipeek.backend.repository.UserRecipeRepository;
 import com.recipeek.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,8 +22,10 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserRecipeRepository userRecipeRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
+    private final RecipeMapper recipeMapper;
 
     public List<UserDTO> findAllUsers() {
         return userRepository.findAll().stream()
@@ -59,5 +65,12 @@ public class UserService {
 
     public List<Role> findAllRoles() {
         return roleRepository.findAll();
+    }
+
+    public List<RecipeDTO> findRecipesByUserId(Integer userId) {
+        List<UserRecipe> userRecipes = userRecipeRepository.findByUserId(userId);
+        return userRecipes.stream()
+                .map(userRecipe -> recipeMapper.toDTO(userRecipe.getRecipe()))
+                .collect(Collectors.toList());
     }
 }

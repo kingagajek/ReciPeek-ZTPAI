@@ -1,4 +1,4 @@
-package com.recipeek.backend.dto;
+package com.recipeek.backend.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

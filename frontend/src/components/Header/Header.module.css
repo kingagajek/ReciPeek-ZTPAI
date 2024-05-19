@@ -14,9 +14,13 @@ header {
     height: 35px;
 }
 
-.profile, .addRecipeIcon {
+.profile, .myRecipesIcon {
     filter: invert(1);
     height: 35px;
+}
+
+.myRecipesIcon {
+    padding: 3px;
 }
 
 @media (max-width: 768px) {

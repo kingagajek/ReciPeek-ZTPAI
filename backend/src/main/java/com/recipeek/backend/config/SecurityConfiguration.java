@@ -33,13 +33,18 @@ public class SecurityConfiguration {
                     )
                     .permitAll()
                     .requestMatchers(
+                            "api/auth/me"
+                    )
+                    .permitAll()
+                    .requestMatchers(
                             HttpMethod.GET,
                             "/api/recipes/**",
                             "/api/ingredients/**",
                             "/api/users/**",
                             "/api/mealTypes/**",
                             "/api/diets/**",
-                            "/api/cuisines/**"
+                            "/api/cuisines/**",
+                            "/api/auth/**"
                     )
                     .permitAll()
                     .requestMatchers(
