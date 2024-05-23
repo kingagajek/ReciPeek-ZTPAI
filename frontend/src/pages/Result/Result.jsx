@@ -1,15 +1,28 @@
-import React from 'react';
-
-import classes from './Result.module.css';
-import chickenwWrap from '../../assets/images/chicken-wrap.jpg'
-import star from '../../assets/icons/star.png'
-import time from '../../assets/icons/time.svg'
-import difficulty from '../../assets/icons/difficulty.svg'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Header from '../../components/Header/Header';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import SortAndFilterButtons from '../../components/SortAndFilterButtons/SortAndFilterButtons';
+import RecipeCard from '../../components/RecipeCard/RecipeCard';
+import classes from './Result.module.css';
 
 export default function Result() {
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/recipes');
+        setRecipes(response.data.content || []);
+      } catch (error) {
+        console.error('Failed to fetch recipes', error);
+        setRecipes([]);
+      }
+    };
+
+    fetchRecipes();
+  }, []);
+
   const handleSortChange = (event) => {
     console.log('Sorting:', event.target.value);
   };
@@ -24,29 +37,22 @@ export default function Result() {
       <SearchBar />
       <SortAndFilterButtons onSortChange={handleSortChange} onFilterClick={handleFilterClick} />
       <div className={classes.recipeGrid}>
-        <a className={classes.recipeCardLink} href="/recipe?recipe_id=1">
-          <div className={classes.recipeCard}>
-            <img className={classes.recipePicture} src={chickenwWrap} alt="Chicken wrap" />
-            <div className={classes.recipeMeta}>
-              <h3 className={classes.recipeTitle}>Recipe name</h3>
-              <p className={classes.recipeDescription}>Description</p>
-              <div className={classes.recipeInfo}>
-                <div className={classes.timeInfo}>
-                  <img className={classes.recipeInfoIcon} src={time} alt="time-icon" />
-                  <span> 30 mins</span>
-                </div>
-                <div className={classes.difficultyInfo}>
-                  <img className={classes.recipeInfoIcon} src={difficulty} alt="difficulty-icon" />
-                  <span>easy</span>
-                </div>
-              </div>
-              <div className={classes.recipeRating}>
-                <img className={classes.starIcon} src={star} alt="star-icon" />
-                <span>4.5</span>
-              </div>
-            </div>
-          </div>
-        </a>
+        {Array.isArray(recipes) && recipes.map(recipe => (
+          <a key={recipe.id} className={classes.recipeCardLink} href={`/recipe/${recipe.id}`}>
+            <RecipeCard
+              id={recipe.id}
+              title={recipe.title}
+              image={recipe.image || 'defaultImage.jpg'}
+              rating={recipe.rating}
+              cookTime={recipe.cookTime}
+              level={recipe.difficulty?.level || 'Unknown'}
+              description={recipe.description}
+              showDescription={true}
+              showFullRating={true}
+              backgroundColor="#fff"
+            />
+          </a>
+        ))}
       </div>
     </div>
   );

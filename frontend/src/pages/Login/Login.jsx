@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Snackbar, Alert } from '@mui/material';
 
 import classes from './Login.module.css';
 import FormInput from '../../components/FormInput/FormInput';
@@ -10,13 +11,15 @@ import LogoHeader from '../../components/LogoHeader/LogoHeader';
 import { useAuth } from '../../context/AuthProvider';
 
 export default function Login() {
-
   const { login } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -25,20 +28,36 @@ export default function Login() {
       login(response.data);
       navigate('/');
     } catch (error) {
+      let errorMessage = '';
       if (error.response) {
-        setError(`Błąd: ${error.response.status} - ${error.response.data.message}`);
+        if (error.response.status === 404) {
+          errorMessage = 'User with this email does not exist.';
+          setEmailError(true);
+          setPasswordError(false);
+        } else if (error.response.status === 401) {
+          errorMessage = 'Incorrect email or password.';
+          setEmailError(true);
+          setPasswordError(true);
+        } else {
+          errorMessage = `Error: ${error.response.status} - ${error.response.data || 'Unknown error'}`;
+        }
       } else if (error.request) {
-        setError('Nie udało się połączyć z serwerem.');
+        errorMessage = 'Failed to connect to the server.';
       } else {
-        setError('Błąd podczas wysyłania żądania.');
+        errorMessage = 'Error occurred while sending the request.';
       }
-      console.error("Wystąpił błąd przy logowaniu:", error.response || error);
+      setError(errorMessage);
+      setOpenSnackbar(true);
+      console.error("Error during login:", error.response || error);
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
   };
 
   return (
     <div className={classes.loginContainer}>
-      {error && <div className="error">{error}</div>}
       <LogoHeader />
       <div className={classes.formContainer}>
         <form className={classes.loginForm} onSubmit={handleSubmit}>
@@ -49,6 +68,7 @@ export default function Login() {
             value={email}
             onChange={e => setEmail(e.target.value)}
             required 
+            className={emailError ? classes.noValid : ''}
           />
           <FormInput 
             type="password" 
@@ -57,6 +77,7 @@ export default function Login() {
             value={password}
             onChange={e => setPassword(e.target.value)}
             required 
+            className={passwordError ? classes.noValid : ''}
           />
           <FormCheckbox 
             id="remember-user" 
@@ -69,6 +90,17 @@ export default function Login() {
         </form>
         <a className={classes.forgotPasswordLink} href="#">Forgot password?</a>
       </div>
+
+      <Snackbar 
+        open={openSnackbar} 
+        autoHideDuration={6000} 
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
+          {error}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

@@ -22,17 +22,6 @@ body {
     border-radius: 15px;
 }
 
-
-.recipePicture {
-    width: 30%;
-    min-width: 200px;
-    max-width: 350px;
-    object-fit: cover;
-    border-radius: 10px;
-    max-height: 350px;
-    object-position: center;
-}
-
 .imagePreviewContainer {
     position: relative;
     display: flex;
@@ -118,80 +107,6 @@ body {
     justify-content: space-between;
     padding: 0 20px;
     flex-grow: 1;
-}
-
-.recipeRating {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: fit-content;
-}
-
-.recipeRatingStars {
-    position: relative;
-}
-
-.recipeRatingStarsEmpty {
-    display: flex;
-}
-
-.recipeRatingStarsEmpty .starIcon {
-    filter: grayscale(1);
-}
-
-.recipeRatingStarsFull {
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    display: flex;
-    pointer-events: none;
-}
-
-.starIcon {
-    height: 38px;
-    cursor: pointer;
-    transition: filter .2s;
-}
-
-.recipeRating .starIcon:hover {
-    filter: unset;
-}
-
-.nutritionItem {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    text-align: center;
-    justify-content: space-between;
-    min-width: 100px;
-    width: calc((65% - 70px) / 8);
-    background-color: #e0e0e0;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
-.nutritionLabel {
-    font-weight: 600;
-    color: #666;
-}
-
-.nutritionValue {
-    font-weight: 400;
-    color: #333;
-}
-
-.ingredientItem {
-    display: flex;
-    margin-bottom: 10px;
-    cursor: pointer;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-    gap: 8px;
-    position: relative;
 }
 
 .ingredientItem input[type="checkbox"] {
@@ -280,19 +195,6 @@ body {
 .instructionStep {
     display: flex;
     align-items: center;
-}
-
-.instructionList {
-    counter-reset: step-counter;
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.instructionList li {
-    counter-increment: step-counter;
-    margin-bottom: 10px;
-    position: relative;
-    padding-left: 30px;
 }
 
 .instructionList li:before {

@@ -6,7 +6,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import RecipeCard from '../RecipeCard/RecipeCard';
 import classes from './RecipeGrid.module.css';
 
-export default function RecipeGrid({ recipes }) {
+export default function RecipeGrid({ recipes, showDescription, showFullRating, backgroundColor }) {
   const validRecipes = Array.isArray(recipes) ? recipes : [];
 
   const sliderSettings = {
@@ -33,17 +33,21 @@ export default function RecipeGrid({ recipes }) {
 
   return (
     <Slider {...sliderSettings} className={classes.recipeGrid}>
-    {validRecipes.map(recipe => (
-      <div key={recipe.id} className={classes.slide}>
-        <RecipeCard
-          title={recipe.title}
-          image={recipe.image}
-          rating={recipe.rating}
-          cookTime={`${recipe.cookTime} min`}
-          level={recipe.difficulty ? recipe.difficulty.level : 'Unknown'}
-        />
-      </div>
-    ))}
-  </Slider>
+      {validRecipes.map(recipe => (
+        <div key={recipe.id} className={classes.slide}>
+          <RecipeCard
+            title={recipe.title}
+            image={recipe.image}
+            rating={recipe.rating}
+            cookTime={recipe.cookTime}
+            level={recipe.difficulty ? recipe.difficulty.level : 'Unknown'}
+            description={recipe.description}
+            showDescription={showDescription}
+            showFullRating={showFullRating}
+            backgroundColor={backgroundColor}
+          />
+        </div>
+      ))}
+    </Slider>
   );
 }

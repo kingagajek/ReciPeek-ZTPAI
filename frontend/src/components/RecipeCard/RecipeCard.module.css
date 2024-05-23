@@ -1,7 +1,6 @@
 .recipeCard {
-    background: var(--color-peach);
     border-radius: 10px;
-    padding: 10px 10px 10px 10px;
+    padding: 10px;
     margin: 0 10px;
 }
 
@@ -61,3 +60,10 @@
     align-items: center;
     gap: 2px;
 }
+
+.recipeDescription {
+    margin: 10px 0;
+    font-weight: 400;
+    font-size: 0.9em;
+    color: #666;
+  }

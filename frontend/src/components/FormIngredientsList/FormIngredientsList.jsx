@@ -3,7 +3,7 @@ import axios from 'axios';
 import classes from './FormIngredientsList.module.css';
 
 function FormIngredientsList({ currentIngredients, onIngredientsChange }) {
-  const [ingredients, setIngredients] = useState([]);
+  const [ingredients, setIngredients] = useState(currentIngredients || []);
   const [availableIngredients, setAvailableIngredients] = useState([]);
   const [error, setError] = useState('');
 
@@ -20,9 +20,9 @@ function FormIngredientsList({ currentIngredients, onIngredientsChange }) {
     fetchIngredients();
   }, []);
 
-  // useEffect(() => {
-  //   setIngredients(currentIngredients);
-  // });
+  useEffect(() => {
+    setIngredients(currentIngredients);
+  }, [currentIngredients]);
 
   const handleIngredientChange = (index, field, value) => {
     const newIngredients = ingredients.map((ingredient, i) => {
@@ -54,7 +54,7 @@ function FormIngredientsList({ currentIngredients, onIngredientsChange }) {
           <div key={index} className={classes.ingredientItem}>
             <select
               className={classes.ingredientInput}
-              value={ingredient.ingredient.id || ''}
+              value={ingredient.ingredientId || ''}
               onChange={(e) => handleIngredientChange(index, 'ingredientId', e.target.value)}
             >
               <option value="">Select Ingredient</option>

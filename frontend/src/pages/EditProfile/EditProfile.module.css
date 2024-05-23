@@ -20,7 +20,7 @@ body {
     margin-bottom: 1rem;
 }
 
-.profilePhotoContainer {
+/* .profilePhotoContainer {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -33,7 +33,7 @@ body {
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #ddd;
-}
+} */
 
 .profileInfoContainer {
     width: 100%;
@@ -45,14 +45,7 @@ body {
     margin-bottom: 0.5rem;
 }
 
-.profileEditSection .profileInfoContainer input,
-.profileInfoContainer button {
-    width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    font-size: 15px;
-}
+
 
 .profileActions {
     display: flex;

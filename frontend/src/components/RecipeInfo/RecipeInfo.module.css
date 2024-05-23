@@ -1,37 +1,65 @@
 .recipeInfoContainer {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
     gap: 10px;
     width: 100%;
+  }
+  
+  .recipeRating {
+    display: flex;
     align-items: center;
+    gap: 5px;
+    width: fit-content;
+    padding-bottom: 30px;
+  }
+  
+  .starIcon {
+    height: 38px;
+    transition: filter .2s;
+  }
+    
+  .recipeRatingStars {
+    display: flex;
+    gap: 2px;
   }
 
-.recipeInfoItem {
-display: flex;
-align-items: center;
-gap: 8px;
-}
- 
-.recipeInfoIcon {
-    height: 38px;
-}
+  .starWrapper {
+    position: relative;
+    cursor: pointer;
+  }
 
-.recipeRating {
+  .starOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 38px;
+    background-color: var(--color-star-fill);
+    z-index: 2;
+  }
+  
+  .infoDetails {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .recipeInfoItem {
     display: flex;
     align-items: center;
     gap: 8px;
-    width: fit-content;
-}
-
-.starIcon {
-    height: 24px;
-}
-
-@media (max-width: 768px) {
+  }
+  
+  .recipeInfoIcon {
+    height: 38px;
+  }
+  
+  @media (max-width: 768px) {
     .recipeInfoContainer {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
+      flex-direction: column;
+      align-items: flex-start;
     }
-}
+  
+    .infoDetails {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }  

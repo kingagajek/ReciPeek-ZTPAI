@@ -28,6 +28,16 @@ body {
   margin-top: 20px;
 }
 
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
+.errorText {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
 @media (max-width: 768px) {
   .loginContainer {
     width: 100%;

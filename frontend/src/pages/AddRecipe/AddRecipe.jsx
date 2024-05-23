@@ -10,10 +10,12 @@ import FormRecipeNutrition from '../../components/FormRecipeNutrition/FormRecipe
 import FormIngredientsList from '../../components/FormIngredientsList/FormIngredientsList';
 import FormInstructionsList from '../../components/FormInstructionsList/FormInstructionsList';
 import FormButton from '../../components/FormButton/FormButton';
+import { useAuth } from '../../context/AuthProvider';
 
 export default function AddRecipe() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { auth } = useAuth();
   const [recipeData, setRecipeData] = useState({
     title: "",
     description: "",
@@ -32,7 +34,11 @@ export default function AddRecipe() {
     if (id) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`http://localhost:8080/api/recipes/${id}`);
+          const response = await axios.get(`http://localhost:8080/api/recipes/${id}`, {
+            headers: {
+              'Authorization': `Bearer ${auth.token}`
+            }
+          });
           setRecipeData({ ...response.data });
         } catch (error) {
           console.error('Error fetching recipe data:', error);
@@ -40,24 +46,26 @@ export default function AddRecipe() {
       };
       fetchData();
     }
-  }, [id]);
+  }, [id, auth.token]);
 
-  
   useEffect(() => {
-    if (!recipeData) return;
+    if (id && recipeData) {
+      const fetchNutrition = async () => {
+        try {
+          const response = await axios.get(`http://localhost:8080/api/recipes/${id}/nutrition`, {
+            headers: {
+              'Authorization': `Bearer ${auth.token}`
+            }
+          });
+          setRecipeData((prevData) => ({ ...prevData, nutrition: { ...response.data } }));
+        } catch (error) {
+          console.error('Error fetching nutrition data:', error);
+        }
+      };
 
-    const fetchNutrition = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/api/recipes/${id}/nutrition`);
-        setRecipeData({ ...recipeData, nutrition: { ...response.data }})
-
-      } catch (error) {
-        console.error('Error fetching nutrition data', error);
-      }
-    };
-
-    fetchNutrition();
-  }, [recipeData, id]);
+      fetchNutrition();
+    }
+  }, [id, recipeData, auth.token]);
 
   const handleInputChange = (field, value) => {
     if (field === 'cookTime' || field === 'servingSize') {
@@ -79,13 +87,21 @@ export default function AddRecipe() {
     try {
       let response;
       if (id) {
-        response = await axios.put(`http://localhost:8080/api/recipes/${id}`, formattedData);
+        response = await axios.put(`http://localhost:8080/api/recipes/${id}`, formattedData, {
+          headers: {
+            'Authorization': `Bearer ${auth.token}`
+          }
+        });
       } else {
-        response = await axios.post('http://localhost:8080/api/recipes', formattedData);
+        response = await axios.post('http://localhost:8080/api/recipes', formattedData, {
+          headers: {
+            'Authorization': `Bearer ${auth.token}`
+          }
+        });
       }
 
       if (response.data && response.status === 200) {
-        navigate(`/recipe/${response.data.id || id}`);
+        navigate(`/recipe/${response.data || id}`);
       } else {
         throw new Error('Failed to save recipe');
       }
@@ -97,10 +113,10 @@ export default function AddRecipe() {
   const handleIngredientsChange = (ingredients) => {
     setRecipeData({ ...recipeData, ingredients });
   };
-  
+
   const handleInstructionsChange = (instructions) => {
     setRecipeData({ ...recipeData, instructions });
-  }; 
+  };
 
   return (
     <>

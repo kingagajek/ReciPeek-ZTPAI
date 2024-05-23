@@ -10,9 +10,17 @@
     box-shadow: 0 0 5px var(--color-primary);
   }
   
-  .formInput.invalid {
+  .invalidInput {
     border-color: red;
     box-shadow: 0 0 0.2em red;
+  }
+
+  .errorText {
+    color: red;
+    font-size: 12px;
+    position: absolute;
+    bottom: -20px;
+    left: 0;
   }
   
   @media (max-width: 768px) {

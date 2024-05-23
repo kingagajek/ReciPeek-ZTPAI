@@ -1,12 +1,7 @@
-body {
+/* body {
     min-height: 100vh;
     background: var(--color-bg-gradient-light);
-}
-
-.mainContainer {
-    display: flex;
-    gap: 24px;
-}
+} */
 
 .ingredientsButton {
     background-color: white;
@@ -59,7 +54,7 @@ body {
     height: 100%;
 }
 
-.recipePicture {
+/* .recipePicture {
     border-radius: 8px 8px 0 0;
     width: 100%;
     height: auto;
@@ -108,7 +103,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-}
+} */
 
 @media (max-width: 768px) {
     .mainContainer {

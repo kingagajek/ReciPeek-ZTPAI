@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
 import { useParams } from 'react-router-dom';
 import classes from './Recipe.module.css';
 import chickenWrap from '../../assets/images/chicken-wrap.jpg';
@@ -11,11 +10,17 @@ import NutritionInfo from '../../components/NutritionInfo/NutritionInfo';
 import IngredientList from '../../components/IngredientList/IngredientList';
 import InstructionList from '../../components/InstructionList/InstructionList';
 import ImageDisplay from '../../components/ImageDisplay/ImageDisplay';
+import { useAuth } from '../../context/AuthProvider';
 
 export default function Recipe() {
   const { id } = useParams();
+  const { auth, user } = useAuth();
+  const isLoggedIn = !!user;
+
   const [recipeData, setRecipeData] = useState(null);
   const [nutritionData, setNutritionData] = useState([]);
+  const [averageRating, setAverageRating] = useState(null);
+  const [ratingCount, setRatingCount] = useState(null);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -45,6 +50,39 @@ export default function Recipe() {
     fetchNutrition();
   }, [recipeData, id]);
 
+  useEffect(() => {
+    const fetchAverageRating = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/ratings/average/${id}`);
+        setAverageRating(response.data.average);
+        setRatingCount(response.data.count);
+      } catch (error) {
+        console.error('Error fetching average rating', error);
+      }
+    };
+
+    fetchAverageRating();
+  }, [id]);
+
+  const handleRate = async (rating) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:8080/api/ratings',
+        { value: rating, recipeId: id, userId: user.id },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.token}`,
+          },
+        }
+      );
+      const updatedResponse = await axios.get(`http://localhost:8080/api/ratings/average/${id}`);
+      setAverageRating(updatedResponse.data.average);
+      setRatingCount(updatedResponse.data.count);
+    } catch (error) {
+      console.error('Error rating recipe:', error);
+    }
+  };
+
   if (!recipeData) {
     return <div>Loading...</div>;
   }
@@ -55,18 +93,17 @@ export default function Recipe() {
       <SearchBar />
       <div className={classes.mainContainer}>
         <div className={classes.mainInfo}>
-        <ImageDisplay src={chickenWrap} alt="Chicken wrap" />
+          <ImageDisplay src={chickenWrap} alt="Chicken wrap" />
           <div className={classes.mainInfoText}>
             <h1 className={classes.RecipeTitle}>{recipeData.title}</h1>
             <RecipeInfo
               cookTime={recipeData.cookTime}
               level={recipeData.difficulty.level}
               servingSize={recipeData.servingSize}
-              // cuisine={recipeData.cuisine.name}
-              // diet={recipeData.diet.type}
-              // mealType={recipeData.mealType.name}
-              rating={recipeData.rating}
-              ratingCount={recipeData.ratingCount}
+              rating={averageRating}
+              ratingCount={ratingCount}
+              onRate={handleRate}
+              isLoggedIn={isLoggedIn}
             />
             <p className={classes.recipeDescription}>{recipeData.description}</p>
             <NutritionInfo nutritionData={nutritionData} />

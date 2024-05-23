@@ -29,7 +29,6 @@ export default function Home() {
   
     fetchRecipes();
   }, []);
-  
 
   return (
     <>
@@ -38,12 +37,21 @@ export default function Home() {
       <div className={classes.mainContainer}>
         <div className={classes.recommendedRecipes}>
           <h2 className={classes.recipeGridTitle}>Recommended</h2>
-          <RecipeGrid recipes={recommendedRecipes} />
+          <RecipeGrid 
+            recipes={recommendedRecipes} 
+            showDescription={false} 
+            showFullRating={false} 
+            backgroundColor="var(--color-peach)" 
+          />
         </div>
-
         <div className={classes.recentRecipes}>
           <h2 className={classes.recipeGridTitle}>Most recent recipes</h2>
-          <RecipeGrid recipes={recentRecipes} />
+          <RecipeGrid 
+            recipes={recentRecipes} 
+            showDescription={false} 
+            showFullRating={false} 
+            backgroundColor="#fff" 
+          />
         </div>
       </div>
     </>
