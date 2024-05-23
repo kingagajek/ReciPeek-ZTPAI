@@ -21,7 +21,7 @@ public class RecipeController {
     @GetMapping
     public ResponseEntity<Page<RecipeDTO>> getAllRecipes(
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "10") int size,
+            @RequestParam(name = "size", defaultValue = "20") int size,
             @RequestParam(name = "sort", defaultValue = "id") String sortBy,
             @RequestParam(name = "order", defaultValue = "asc") String order) {
 
@@ -31,7 +31,7 @@ public class RecipeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RecipeDTO> getRecipaeById(@PathVariable Integer id) {
+    public ResponseEntity<RecipeDTO> getRecipeById(@PathVariable Integer id) {
         return ResponseEntity.ok(recipeService.findRecipeById(id));
     }
 

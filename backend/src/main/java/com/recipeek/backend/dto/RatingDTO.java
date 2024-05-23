@@ -13,4 +13,5 @@ public class RatingDTO {
     private Integer id;
     private Double value;
     private Integer recipeId;
+    private Integer userId;
 }

@@ -28,6 +28,18 @@ public class AuthenticationService {
 
 
     public AuthenticationResponse register(RegisterRequest request) {
+        if (request.getPassword().length() < 8) {
+            throw new RuntimeException("Password must be at least 8 characters long");
+        }
+
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new RuntimeException("User with this email already exists");
+        }
+
+        if (userRepository.existsByLogin(request.getLogin())) {
+            throw new RuntimeException("User with this login already exists");
+        }
+
         Role role = roleRepository.findRoleByName("USER")
             .orElseThrow(() -> new RuntimeException("Role not found"));
 
@@ -46,14 +58,19 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse login(AuthenticationRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
         var user = userRepository.findUserByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()
+                    )
+            );
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Incorrect password");
+        }
 
         var jwt = jwtService.generateToken(user);
         return AuthenticationResponse.builder()

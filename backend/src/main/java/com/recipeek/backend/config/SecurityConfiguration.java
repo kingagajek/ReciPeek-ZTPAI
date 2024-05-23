@@ -44,7 +44,8 @@ public class SecurityConfiguration {
                             "/api/mealTypes/**",
                             "/api/diets/**",
                             "/api/cuisines/**",
-                            "/api/auth/**"
+                            "/api/auth/**",
+                            "/api/ratings/**"
                     )
                     .permitAll()
                     .requestMatchers(
@@ -54,7 +55,8 @@ public class SecurityConfiguration {
                             "/api/users/**",
                             "/api/mealTypes/**",
                             "/api/diets/**",
-                            "/api/cuisines/**"
+                            "/api/cuisines/**",
+                            "/api/ratings/**"
                     )
                     .permitAll()
                     .requestMatchers(
@@ -64,7 +66,8 @@ public class SecurityConfiguration {
                             "/api/users/**",
                             "/api/mealTypes/**",
                             "/api/diets/**",
-                            "/api/cuisines/**"
+                            "/api/cuisines/**",
+                            "/api/ratings/**"
                     )
                     .permitAll()
                     .requestMatchers(
@@ -74,7 +77,8 @@ public class SecurityConfiguration {
                             "/api/users/**",
                             "/api/mealTypes/**",
                             "/api/diets/**",
-                            "/api/cuisines/**"
+                            "/api/cuisines/**",
+                            "/api/ratings/**"
                     )
                     .permitAll()
                     .anyRequest()

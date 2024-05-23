@@ -9,6 +9,6 @@ public class RatingMapper {
 
     public RatingDTO toDTO(Rating rating) {
         return new RatingDTO(rating.getId(), rating.getValue(),
-                rating.getRecipe().getId());
+                rating.getRecipe().getId(), rating.getUser().getId());
     }
 }

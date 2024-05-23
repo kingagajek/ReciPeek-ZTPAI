@@ -39,12 +39,14 @@ public class UserService {
         return userMapper.toDTO(savedUser);
     }
 
-    public UserDTO updateUser(Integer id, UserDTO userDTO) {
+    public UserDTO updateUser(Integer id, UserDTO userDTO, boolean isAdmin) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
         existingUser.setEmail(userDTO.getEmail());
         existingUser.setLogin(userDTO.getLogin());
-        existingUser.setRole(userDTO.getRole());
+        if (isAdmin && userDTO.getRole() != null) {
+            existingUser.setRole(userDTO.getRole());
+        }
         User updatedUser = userRepository.save(existingUser);
         return userMapper.toDTO(updatedUser);
     }
