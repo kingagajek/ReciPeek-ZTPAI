@@ -30,6 +30,19 @@ public class RecipeController {
         return ResponseEntity.ok(recipes);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<Page<RecipeDTO>> searchRecipes(
+            @RequestParam String query,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "20") int size,
+            @RequestParam(name = "sort", defaultValue = "id") String sortBy,
+            @RequestParam(name = "order", defaultValue = "asc") String order) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sortBy));
+        Page<RecipeDTO> recipes = recipeService.searchRecipes(query, pageable);
+        return ResponseEntity.ok(recipes);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<RecipeDTO> getRecipeById(@PathVariable Integer id) {
         return ResponseEntity.ok(recipeService.findRecipeById(id));

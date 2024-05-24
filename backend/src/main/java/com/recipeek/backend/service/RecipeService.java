@@ -9,15 +9,14 @@ import com.recipeek.backend.mapper.RecipeMapper;
 import com.recipeek.backend.mapper.NutritionMapper;
 import com.recipeek.backend.model.*;
 import com.recipeek.backend.repository.*;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -32,6 +31,8 @@ public class RecipeService {
     private final NutritionMapper nutritionMapper;
     private final RecipeIngredientMapper recipeIngredientMapper;
     private final InstructionMapper instructionMapper;
+    private final RatingRepository ratingRepository;
+    private final UserRecipeRepository userRecipeRepository;
     private final DifficultyRepository difficultyRepository;
     private final CuisineRepository cuisineRepository;
     private final MealTypeRepository mealTypeRepository;
@@ -81,7 +82,18 @@ public class RecipeService {
         return recipeMapper.toDTO(updatedRecipe);
     }
 
+    @Transactional
     public void deleteRecipe(Integer id) {
+        Recipe recipe = recipeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Recipe not found with id: " + id));
+        instructionRepository.deleteByRecipeId(id);
+        recipeIngredientRepository.deleteByRecipeId(id);
+        nutritionRepository.deleteByRecipeId(id);
+        ratingRepository.deleteByRecipeId(id);
+        userRecipeRepository.deleteByRecipeId(id);
+        if (recipe.getPictureUrl() != null && !recipe.getPictureUrl().isEmpty()) {
+            fileStorageService.deleteFile(recipe.getPictureUrl());
+        }
         recipeRepository.deleteById(id);
     }
 
@@ -176,5 +188,10 @@ public class RecipeService {
 
         recipe.setPictureUrl(recipePicture);
         recipeRepository.save(recipe);
+    }
+
+    public Page<RecipeDTO> searchRecipes(String query, Pageable pageable) {
+        return recipeRepository.findByTitleContainingIgnoreCase(query, pageable)
+                .map(recipeMapper::toDTO);
     }
 }

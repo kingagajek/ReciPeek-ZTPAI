@@ -22,10 +22,10 @@ public class Nutrition {
     @JoinColumn(name = "recipe_id", referencedColumnName = "id")
     private Recipe recipe;
 
-    private Double calories;
+    private Double kcal;
     private Double fat;
-    private Double saturatedFat;
-    private Double carbohydrates;
+    private Double saturates;
+    private Double carbs;
     private Double sugars;
     private Double fiber;
     private Double protein;

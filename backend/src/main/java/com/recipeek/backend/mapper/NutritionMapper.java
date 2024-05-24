@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 public class NutritionMapper {
     public NutritionDTO toDTO(Nutrition nutrition) {
         NutritionDTO dto = new NutritionDTO();
-        dto.setCalories(nutrition.getCalories());
+        dto.setKcal(nutrition.getKcal());
         dto.setFat(nutrition.getFat());
-        dto.setSaturatedFat(nutrition.getSaturatedFat());
-        dto.setCarbohydrates(nutrition.getCarbohydrates());
+        dto.setSaturates(nutrition.getSaturates());
+        dto.setCarbs(nutrition.getCarbs());
         dto.setSugars(nutrition.getSugars());
         dto.setFiber(nutrition.getFiber());
         dto.setProtein(nutrition.getProtein());
@@ -21,10 +21,10 @@ public class NutritionMapper {
     }
     public Nutrition toEntity(NutritionDTO dto) {
         Nutrition nutrition = new Nutrition();
-        nutrition.setCalories(dto.getCalories());
+        nutrition.setKcal(dto.getKcal());
         nutrition.setFat(dto.getFat());
-        nutrition.setSaturatedFat(dto.getSaturatedFat());
-        nutrition.setCarbohydrates(dto.getCarbohydrates());
+        nutrition.setSaturates(dto.getSaturates());
+        nutrition.setCarbs(dto.getCarbs());
         nutrition.setSugars(dto.getSugars());
         nutrition.setFiber(dto.getFiber());
         nutrition.setProtein(dto.getProtein());
