@@ -13,9 +13,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -35,6 +37,7 @@ public class RecipeService {
     private final MealTypeRepository mealTypeRepository;
     private final DietRepository dietRepository;
     private final IngredientRepository ingredientRepository;
+    private final FileStorageService fileStorageService;
 
     public Page<RecipeDTO> findAllRecipes(Pageable pageable) {
         return recipeRepository.findAll(pageable)
@@ -155,4 +158,23 @@ public class RecipeService {
         return saveId;
     }
 
+    public void uploadPicture(Integer recipeId, MultipartFile file) {
+        var user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+//        if (!Objects.equals(user.getRole().getName(), "ADMIN")) {
+//            throw NO_PERMISSION.getError();
+//        }
+
+        Recipe recipe = recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new RuntimeException("Recipe not found"));
+
+        if (recipe.getPictureUrl() != null && !recipe.getPictureUrl().isEmpty()) {
+            fileStorageService.deleteFile(recipe.getPictureUrl());
+        }
+
+        String recipePicture = fileStorageService.saveFile(file);
+
+        recipe.setPictureUrl(recipePicture);
+        recipeRepository.save(recipe);
+    }
 }

@@ -3,6 +3,7 @@ package com.recipeek.backend.mapper;
 import com.recipeek.backend.dto.*;
 import com.recipeek.backend.dto.request.RecipeRequest;
 import com.recipeek.backend.model.*;
+import com.recipeek.backend.service.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +31,7 @@ public class RecipeMapper {
                     .map(ratingMapper::toDTO)
                     .collect(Collectors.toList()));
         }
+        dto.setPictureUrl(FileUtils.readFile(recipe.getPictureUrl()));
         return dto;
     }
 

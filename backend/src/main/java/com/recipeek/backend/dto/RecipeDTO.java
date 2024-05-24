@@ -21,6 +21,7 @@ public class RecipeDTO {
     private DifficultyDTO difficulty;
     private CuisineDTO cuisine;
     private DietDTO diet;
+    private byte[] pictureUrl;
     private List<RecipeIngredientDTO> ingredients;
     private List<InstructionDTO> instructions;
     private List<NutritionDTO> nutrition;

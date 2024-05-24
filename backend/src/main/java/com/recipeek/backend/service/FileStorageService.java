@@ -1,50 +1,69 @@
 package com.recipeek.backend.service;
 
-import lombok.RequiredArgsConstructor;
-import lombok.Value;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
-@Service
+@Slf4j
 @RequiredArgsConstructor
+@Service
 public class FileStorageService {
-    private static final Logger log = LoggerFactory.getLogger(FileStorageService.class);
+    @Value("${application.file.upload.photos-path}")
+    private String fileUploadPath;
 
-//    @Value("${application.file.upload.dir}")
-    private String fileUploadDir;
-
-    public String saveFile(MultipartFile file) throws IOException {
-        if (file.isEmpty()) {
-            throw new IllegalArgumentException("Cannot save an empty file.");
-        }
-
-        String filename = constructFilename(file.getOriginalFilename());
-        Path destinationFile = Paths.get(fileUploadDir).resolve(Paths.get(filename))
-                .normalize().toAbsolutePath();
-
-        if (!destinationFile.getParent().equals(Paths.get(fileUploadDir).toAbsolutePath())) {
-            throw new IllegalArgumentException("Cannot store file outside current directory.");
-        }
-
-        file.transferTo(destinationFile);
-        log.info("File uploaded successfully: {}", destinationFile);
-        return destinationFile.toString();
+    public void deleteFile(String pictureUrl) {
     }
 
-    private String constructFilename(String originalFilename) {
-        String fileExt = getFileExtension(originalFilename);
-        return System.currentTimeMillis() + "." + fileExt;
+    public String saveFile(@NonNull MultipartFile sourceFile) {
+        return uploadFile(sourceFile    );
     }
 
-    private String getFileExtension(String filename) {
-        return filename.substring(filename.lastIndexOf(".") + 1);
+    private String uploadFile(@NonNull MultipartFile sourceFile) {
+
+        File targetFolder = new File(fileUploadPath);
+        if (!targetFolder.exists()) {
+            boolean folderCreated = targetFolder.mkdir();
+
+            if (!folderCreated) {
+                log.warn("Failed to create the target folder");
+            }
+        }
+
+        final String fileExt = getFileExtension(sourceFile.getOriginalFilename());
+        String targetFilePath = fileUploadPath + File.separator + System.currentTimeMillis() + "." + fileExt;
+        Path targetPath = Paths.get(targetFilePath);
+
+        try {
+            Files.write(targetPath, sourceFile.getBytes());
+            log.info("File saved to: {}", targetFilePath);
+            return targetFilePath;
+        } catch (IOException e) {
+            log.error("File was not saved", e);
+        }
+
+        return null;
+    }
+
+    private String getFileExtension(String fullFilename) {
+        if (fullFilename == null || fullFilename.isEmpty()) {
+            return "";
+        }
+
+        int lastDotIndex = fullFilename.lastIndexOf(".");
+
+        if (lastDotIndex == -1) {
+            return "";
+        }
+
+        return fullFilename.substring(lastDotIndex + 1).toLowerCase();
     }
 }

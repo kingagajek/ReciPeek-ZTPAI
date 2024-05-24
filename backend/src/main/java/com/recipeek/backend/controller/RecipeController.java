@@ -79,4 +79,13 @@ public class RecipeController {
         return ResponseEntity.ok(recipes);
     }
 
+    @PostMapping(value = "/picture/{id}", consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadRecipePicture(
+            @PathVariable("id") Integer recipeId,
+            @RequestPart("file") MultipartFile file
+    ) {
+        recipeService.uploadPicture(recipeId, file);
+        return ResponseEntity.accepted().build();
+    }
+
 }
