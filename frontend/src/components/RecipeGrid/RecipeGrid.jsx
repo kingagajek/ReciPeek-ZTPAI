@@ -37,7 +37,7 @@ export default function RecipeGrid({ recipes, showDescription, showFullRating, b
         <div key={recipe.id} className={classes.slide}>
           <RecipeCard
             title={recipe.title}
-            image={recipe.image}
+            image={recipe.pictureUrl}
             rating={recipe.rating}
             cookTime={recipe.cookTime}
             level={recipe.difficulty ? recipe.difficulty.level : 'Unknown'}

@@ -45,7 +45,7 @@ public class Recipe {
     @ManyToOne
     @JoinColumn(name = "id_diet", referencedColumnName = "id")
     private Diet diet;
-    private String image;
+    private String pictureUrl;
     @OneToMany(mappedBy = "recipe")
     private List<Rating> ratings;
     private Integer views;

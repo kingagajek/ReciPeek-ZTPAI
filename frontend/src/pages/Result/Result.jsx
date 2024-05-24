@@ -42,7 +42,7 @@ export default function Result() {
             <RecipeCard
               id={recipe.id}
               title={recipe.title}
-              image={recipe.image || 'defaultImage.jpg'}
+              image={recipe.pictureUrl}
               rating={recipe.rating}
               cookTime={recipe.cookTime}
               level={recipe.difficulty?.level || 'Unknown'}
@@ -50,6 +50,7 @@ export default function Result() {
               showDescription={true}
               showFullRating={true}
               backgroundColor="#fff"
+              isResultPage={true}
             />
           </a>
         ))}

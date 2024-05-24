@@ -21,11 +21,46 @@
     cursor: pointer;
   }
   
+  .imagePreviewContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
   .imagePreview {
     display: block;
     max-width: 100%;
     max-height: 300px;
     border-radius: 12px;
+}
+
+.changeImageButton {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, .5);
+  backdrop-filter: blur(3px);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  opacity: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.changeImageButton:hover {
+  opacity: 1;
 }
   
   .imageUploadPlus {
@@ -35,7 +70,7 @@
   
   .imageUploadText {
     margin-top: 10px;
-    font-size: 18px; /* Dopasuj rozmiar czcionki do designu */
+    font-size: 18px;
   }
   
   .imageInput {

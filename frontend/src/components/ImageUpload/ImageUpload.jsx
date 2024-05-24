@@ -15,7 +15,16 @@ const ImageUpload = ({ onImageChange }) => {
   return (
     <div className={classes.imageUploadContainer}>
       {preview ? (
-        <img src={preview} alt="Preview" className={classes.imagePreview} />
+        <div className={classes.imagePreviewContainer}>
+          <img src={preview} alt="Preview" className={classes.imagePreview} />
+          <button
+            type="button"
+            className={classes.changeImageButton}
+            onClick={() => document.getElementById('file-upload').click()}
+          >
+            Change image
+          </button>
+        </div>
       ) : (
         <label htmlFor="file-upload" className={classes.imageUploadLabel}>
           <div className={classes.imageUploadPlus}>+</div>
@@ -29,7 +38,6 @@ const ImageUpload = ({ onImageChange }) => {
         accept="image/*"
         onChange={handleImageChange}
         className={classes.imageInput}
-        style={{ display: 'none' }} 
       />
     </div>
   );

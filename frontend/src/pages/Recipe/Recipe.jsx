@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import classes from './Recipe.module.css';
-import chickenWrap from '../../assets/images/chicken-wrap.jpg';
 import Header from '../../components/Header/Header';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import RecipeInfo from '../../components/RecipeInfo/RecipeInfo';
@@ -93,7 +92,7 @@ export default function Recipe() {
       <SearchBar />
       <div className={classes.mainContainer}>
         <div className={classes.mainInfo}>
-          <ImageDisplay src={chickenWrap} alt="Chicken wrap" />
+          <ImageDisplay src={recipeData.pictureUrl} alt={recipeData.title} />
           <div className={classes.mainInfoText}>
             <h1 className={classes.RecipeTitle}>{recipeData.title}</h1>
             <RecipeInfo

@@ -15,7 +15,8 @@ export default function RecipeCard({
   description, 
   showDescription, 
   showFullRating, 
-  backgroundColor 
+  backgroundColor, 
+  isResultPage 
 }) {
   const [ratingData, setRatingData] = useState({ average: 0, count: 0 });
 
@@ -35,12 +36,31 @@ export default function RecipeCard({
   const averageRating = typeof ratingData.average === 'number' ? ratingData.average : 0;
   const textColor = backgroundColor === '#fff' ? '#000' : '#fff';
 
+  const getImageSrc = (image) => {
+    if (image) {
+      return `data:image/jpeg;base64,${image}`;
+    }
+    return 'defaultImage.jpg';
+  };
+
   return (
     <div className={classes.recipeCard} style={{ backgroundColor }}>
-      <img className={classes.recipeThumbnail} src={image || 'defaultImage.jpg'} alt={title} />
+      <img className={classes.recipeThumbnail} src={getImageSrc(image)} alt={title} />
       <div className={classes.recipeMeta}>
-        <div className={classes.recipeTitle} style={{ color: textColor }}>
-          {showFullRating ? (
+        {isResultPage ? (
+          <>
+            <h3 className={classes.recipeTitle} style={{ color: textColor }}>{title}</h3>
+            {showDescription && <p className={classes.recipeDescription}>{description}</p>}
+            <div className={classes.recipeInfo}>
+              <div className={classes.timeInfo}>
+                <img className={classes.recipeInfoIcon} src={time} alt="time-icon" style={{ filter: textColor === '#000' ? 'invert(0)' : 'invert(1)' }} />
+                <span style={{ color: textColor }}>{cookTime} mins</span>
+              </div>
+              <div className={classes.difficultyInfo}>
+                <img className={classes.recipeInfoIcon} src={difficultyIcon} alt="difficulty-icon" style={{ filter: textColor === '#000' ? 'invert(0)' : 'invert(1)' }} />
+                <span style={{ color: textColor }}>{level}</span>
+              </div>
+            </div>
             <div className={classes.recipeRating}>
               {Array.from({ length: 5 }, (_, index) => (
                 <img
@@ -53,25 +73,44 @@ export default function RecipeCard({
               ))}
               <span>{averageRating.toFixed(1)}</span>
             </div>
-          ) : (
-            <div className={classes.recipeRating}>
-              <img className={classes.starIcon} src={star} alt="star-icon" />
-              <span>{averageRating.toFixed(1)}</span>
+          </>
+        ) : (
+          <>
+            <div className={classes.recipeTitle} style={{ color: textColor }}>
+              {showFullRating ? (
+                <div className={classes.recipeRating}>
+                  {Array.from({ length: 5 }, (_, index) => (
+                    <img
+                      key={index}
+                      className={classes.starIcon}
+                      src={star}
+                      alt="star-icon"
+                      style={{ opacity: index < averageRating ? 1 : 0.5 }}
+                    />
+                  ))}
+                  <span>{averageRating.toFixed(1)}</span>
+                </div>
+              ) : (
+                <div className={classes.recipeRating}>
+                  <img className={classes.starIcon} src={star} alt="star-icon" />
+                  <span>{averageRating.toFixed(1)}</span>
+                </div>
+              )}
+              <h3>{title}</h3>
             </div>
-          )}
-          <h3>{title}</h3>
-        </div>
-        {showDescription && <p className={classes.recipeDescription}>{description}</p>}
-        <div className={classes.recipeInfo}>
-          <div className={classes.timeInfo}>
-            <img className={classes.recipeInfoIcon} src={time} alt="time-icon" style={{ filter: textColor === '#000' ? 'invert(0)' : 'invert(1)' }} />
-            <span style={{ color: textColor }}>{cookTime} mins</span>
-          </div>
-          <div className={classes.difficultyInfo}>
-            <img className={classes.recipeInfoIcon} src={difficultyIcon} alt="difficulty-icon" style={{ filter: textColor === '#000' ? 'invert(0)' : 'invert(1)' }} />
-            <span style={{ color: textColor }}>{level}</span>
-          </div>
-        </div>
+            {showDescription && <p className={classes.recipeDescription}>{description}</p>}
+            <div className={classes.recipeInfo}>
+              <div className={classes.timeInfo}>
+                <img className={classes.recipeInfoIcon} src={time} alt="time-icon" style={{ filter: textColor === '#000' ? 'invert(0)' : 'invert(1)' }} />
+                <span style={{ color: textColor }}>{cookTime} mins</span>
+              </div>
+              <div className={classes.difficultyInfo}>
+                <img className={classes.recipeInfoIcon} src={difficultyIcon} alt="difficulty-icon" style={{ filter: textColor === '#000' ? 'invert(0)' : 'invert(1)' }} />
+                <span style={{ color: textColor }}>{level}</span>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
@@ -87,10 +126,12 @@ RecipeCard.propTypes = {
   showDescription: PropTypes.bool,
   showFullRating: PropTypes.bool,
   backgroundColor: PropTypes.string,
+  isResultPage: PropTypes.bool,
 };
 
 RecipeCard.defaultProps = {
   showDescription: false,
   showFullRating: false,
   backgroundColor: 'var(--color-peach)',
+  isResultPage: false,
 };

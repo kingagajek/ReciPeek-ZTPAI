@@ -29,6 +29,7 @@ export default function AddRecipe() {
     ingredients: [],
     instructions: []
   });
+  const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
     if (id) {
@@ -92,12 +93,32 @@ export default function AddRecipe() {
             'Authorization': `Bearer ${auth.token}`
           }
         });
+        if (imageFile) {
+          const formData = new FormData();
+          formData.append('file', imageFile);
+          await axios.post(`http://localhost:8080/api/recipes/picture/${id}`, formData, {
+            headers: {
+              'Authorization': `Bearer ${auth.token}`,
+              'Content-Type': 'multipart/form-data'
+            }
+          });
+        }
       } else {
         response = await axios.post('http://localhost:8080/api/recipes', formattedData, {
           headers: {
             'Authorization': `Bearer ${auth.token}`
           }
         });
+        if (imageFile) {
+          const formData = new FormData();
+          formData.append('file', imageFile);
+          await axios.post(`http://localhost:8080/api/recipes/picture/${response.data}`, formData, {
+            headers: {
+              'Authorization': `Bearer ${auth.token}`,
+              'Content-Type': 'multipart/form-data'
+            }
+          });
+        }
       }
 
       if (response.data && response.status === 200) {
@@ -123,7 +144,7 @@ export default function AddRecipe() {
       <Header />
       <form className={classes.mainContainer} onSubmit={handleSubmit} encType="multipart/form-data">
         <div className={classes.mainInfo}>
-          <ImageUpload />
+          <ImageUpload onImageChange={setImageFile} />
           <div className={classes.mainInfoText}>
             <FormRecipeBasicInfo onInputChange={handleInputChange} formData={recipeData} />
             <FormRecipeNutrition onInputChange={handleInputChange} formData={recipeData} />
