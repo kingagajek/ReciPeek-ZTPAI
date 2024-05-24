@@ -1,7 +1,6 @@
 .recipeInfoContainer {
     display: flex;
     flex-direction: column;
-    gap: 10px;
     width: 100%;
   }
   
@@ -10,7 +9,7 @@
     align-items: center;
     gap: 5px;
     width: fit-content;
-    padding-bottom: 30px;
+    padding: 10px 0;
   }
   
   .starIcon {
@@ -39,7 +38,10 @@
   
   .infoDetails {
     display: flex;
+    width: 100%;
+    max-width: 500px;
     justify-content: space-between;
+    padding: 10px 0;
   }
   
   .recipeInfoItem {

@@ -95,6 +95,7 @@ span.textPeach {
     display: block;
     box-sizing: border-box;
     font-weight: 400;
+    cursor: pointer;
 }
 
 .buttonBgClear {
@@ -110,6 +111,7 @@ span.textPeach {
     font-weight: 400;
     box-sizing: border-box;
     display: block;
+    cursor: pointer;
 }
 
 .buttonBgGradient {
@@ -125,6 +127,7 @@ span.textPeach {
     font-weight: 400;
     box-sizing: border-box;
     display: block;
+    cursor: pointer;
 }
 
 input[type="text"], input[type="password"], input[type="email"]  {

@@ -30,6 +30,7 @@ export default function AddRecipe() {
     instructions: []
   });
   const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
     if (id) {
@@ -41,6 +42,9 @@ export default function AddRecipe() {
             }
           });
           setRecipeData({ ...response.data });
+          if (response.data.pictureUrl) {
+            setImagePreview(`data:image/jpeg;base64,${response.data.pictureUrl}`);
+          }
         } catch (error) {
           console.error('Error fetching recipe data:', error);
         }
@@ -144,7 +148,7 @@ export default function AddRecipe() {
       <Header />
       <form className={classes.mainContainer} onSubmit={handleSubmit} encType="multipart/form-data">
         <div className={classes.mainInfo}>
-          <ImageUpload onImageChange={setImageFile} />
+          <ImageUpload onImageChange={setImageFile} imagePreviewUrl={imagePreview} />
           <div className={classes.mainInfoText}>
             <FormRecipeBasicInfo onInputChange={handleInputChange} formData={recipeData} />
             <FormRecipeNutrition onInputChange={handleInputChange} formData={recipeData} />

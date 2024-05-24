@@ -20,6 +20,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    max-width: 1350px;
 }
 
 .recipeCard {
@@ -28,6 +29,8 @@
     display: flex;
     padding: 25px;
     border-radius: 15px;
+    cursor: pointer;
+    position: relative;
 }
 
 .mainInfoText {
@@ -39,25 +42,21 @@
 }
 
 .actionButtons {
+    position: absolute;
+    top: 15px;
+    right: 15px;
     display: flex;
     gap: 10px;
-    margin-top: 20px;
 }
 
-.editButton, .deleteButton {
-    background-color: var(--color-peach-light);
+.iconButton {
+    background: none;
     border: none;
-    border-radius: 8px;
-    color: white;
-    padding: 10px 20px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 24px;
+    color: var(--color-peach);
 }
 
-.editButton {
-    background-color: var(--color-peach);
-}
-
-.deleteButton {
-    background-color: var(--color-grey-dark);
+.iconButton:hover {
+    color: var(--color-peach-dark);
 }

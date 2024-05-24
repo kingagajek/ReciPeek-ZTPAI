@@ -4,7 +4,7 @@ import logo from '../../assets/icons/logo.svg';
 
 export default function LogoHeader() {
     return (
-        <a className={classes.backToHome} href="/home">
+        <a className={classes.backToHome} href="/">
         <div className={classes.logoContainer}>
             <img className={classes.logo} src={logo} alt="logo" />
             <h1>Reci<span className="textPeach">Peek</span></h1>

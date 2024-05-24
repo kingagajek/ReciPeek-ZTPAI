@@ -1,14 +1,9 @@
-/* .imageContainer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
-
 .recipeImage {
-    width: 100%;
-    max-width: 350px;
-    height: auto;
-    object-fit: cover;
-    border-radius: 10px;
+  width: 30%;
+  min-width: 200px;
+  max-width: 350px;
+  object-fit: cover;
+  border-radius: 10px;
+  max-height: 350px;
+  object-position: center;
   }

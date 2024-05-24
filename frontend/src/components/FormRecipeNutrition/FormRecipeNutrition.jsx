@@ -8,10 +8,10 @@ function FormRecipeNutrition({ onInputChange, formData }) {
       <div className={classes.nutritionDetails}>
         <input
           type="number"
-          name="calories"
+          name="kcal"
           placeholder="kcal..."
-          value={formData.nutrition?.calories || ''}
-          onChange={(e) => onInputChange('nutrition', { ...formData.nutrition, calories: e.target.value })}
+          value={formData.nutrition?.kcal || ''}
+          onChange={(e) => onInputChange('nutrition', { ...formData.nutrition, kcal: e.target.value })}
           min="0"
         />
         <input
@@ -24,18 +24,18 @@ function FormRecipeNutrition({ onInputChange, formData }) {
         />
         <input
           type="number"
-          name="saturatedFat"
+          name="saturates"
           placeholder="saturates (g)..."
-          value={formData.nutrition?.saturatedFat || ''}
-          onChange={(e) => onInputChange('nutrition', { ...formData.nutrition, saturatedFat: e.target.value })}
+          value={formData.nutrition?.saturates || ''}
+          onChange={(e) => onInputChange('nutrition', { ...formData.nutrition, saturates: e.target.value })}
           min="0" step="0.1"
         />
         <input
           type="number"
-          name="carbohydrates"
+          name="carbs"
           placeholder="carbs (g)..."
-          value={formData.nutrition?.carbohydrates || ''}
-          onChange={(e) => onInputChange('nutrition', { ...formData.nutrition, carbohydrates: e.target.value })}
+          value={formData.nutrition?.carbs || ''}
+          onChange={(e) => onInputChange('nutrition', { ...formData.nutrition, carbs: e.target.value })}
           min="0" step="0.1"
         />
         <input

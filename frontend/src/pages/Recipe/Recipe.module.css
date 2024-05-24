@@ -22,85 +22,6 @@ body {
     border-radius: 15px;
 }
 
-.imagePreviewContainer {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.imagePreview {
-    display: block;
-    max-width: 100%;
-    max-height: 300px;
-    border-radius: 12px;
-}
-
-.changeImageButton {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(255, 255, 255, .5);
-    backdrop-filter: blur(3px);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: 0.3s;
-    opacity: 0;
-    font-size: 16px;
-    font-weight: 700;
-}
-
-.changeImageButton:hover {
-    opacity: 1;
-}
-
-.imageUploadContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-    cursor: pointer;
-}
-
-.imageUploadLabel {
-    border: 2px dashed #ccc;
-    border-radius: 12px;
-    padding: 30px;
-    text-align: center;
-    background-color: #f8f8f8;
-    color: #888;
-    transition: background-color 0.3s;
-}
-
-.imageUploadPlus {
-    font-size: 48px;
-    color: #888;
-}
-
-.imageUploadText {
-    margin-top: 10px;
-    font-size: 18px;
-}
-
-.imageUploadLabel:hover {
-    background-color: #e0e0e0;
-}
-
-#fileUpload {
-    display: none;
-}
-
 .mainInfoText {
     display: flex;
     flex-direction: column;
@@ -109,101 +30,8 @@ body {
     flex-grow: 1;
 }
 
-.ingredientItem input[type="checkbox"] {
-    visibility: hidden;
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-    cursor: pointer;
-}
-
-.ingredientItem input[type="checkbox"] + span:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 18px;
-    height: 18px;
-    background: white;
-    border-radius: 50%;
-    border: 3px solid black;
-}
-
-.ingredientItem input[type="checkbox"]:checked + span:before {
-    border: 3px solid var(--color-peach);
-}
-
-.ingredientItem input[type="checkbox"]:checked + span {
-    color: var(--color-grey-light);
-    text-decoration: line-through;
-}
-
-.ingredientItem input[type="checkbox"]:checked + span:after {
-    content: '✓';
-    position: absolute;
-    left: 6px;
-    top: 0;
-    transform: translateY(-24%) rotate(15deg);
-    color: var(--color-peach);
-    font-size: 24px;
-    font-weight: 600;
-    text-shadow: 2px 2px white, -1px -3px white, 1px 1px white;
-}
-
-.ingredientItem span {
-    display: block;
-    padding: 5px 0;
-    transition: background-color 0.2s;
-}
-
-.ingredientStep {
-    align-items: center;
-}
-
-.ingredientItem .ingredientInput {
-    width: 100%;
-    margin-bottom: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.ingredientItem .ingredientMeasurement {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-color: #fff;
-    border: 1px solid #ddd;
-}
-
-.instructionInput {
-    flex-grow: 2;
-    border: none;
-    border-radius: 8px;
-    height: auto;
-    box-sizing: border-box;
-    padding: 14px 14px;
-    font-size: 12px;
-    letter-spacing: 1px;
-    color: var(--color-black-light);
-}
-
-.stepLabel {
-    font-weight: bold;
-    margin-right: 5px;
-}
-
-.instructionStep {
-    display: flex;
-    align-items: center;
-}
-
-.instructionList li:before {
-    content: counter(step-counter) ".";
-    position: absolute;
-    left: 0;
-    top: 0;
-    font-weight: bold;
-    color: #333;
+.recipeDescription {
+    padding: 10px 0;
 }
 
 .recipeContent {
@@ -223,12 +51,6 @@ body {
         padding: 10px;
     }
 
-    .recipePicture {
-        width: 100%;
-        max-width: unset;
-        min-width: unset;
-    }
-
     .mainInfoText {
         gap: 10px;
         padding: 0;
@@ -241,8 +63,5 @@ body {
 
     .recipeContent {
         flex-direction: column;
-    }
-    .ingredientQuantity, .ingredientMeasurement {
-        max-width: 100%;
     }
 }

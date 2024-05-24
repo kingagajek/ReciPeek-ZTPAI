@@ -34,7 +34,7 @@ export default function RecipeGrid({ recipes, showDescription, showFullRating, b
   return (
     <Slider {...sliderSettings} className={classes.recipeGrid}>
       {validRecipes.map(recipe => (
-        <div key={recipe.id} className={classes.slide}>
+        <a key={recipe.id} className={classes.slide} href={`/recipe/${recipe.id}`} >
           <RecipeCard
             title={recipe.title}
             image={recipe.pictureUrl}
@@ -46,7 +46,7 @@ export default function RecipeGrid({ recipes, showDescription, showFullRating, b
             showFullRating={showFullRating}
             backgroundColor={backgroundColor}
           />
-        </div>
+        </a>
       ))}
     </Slider>
   );

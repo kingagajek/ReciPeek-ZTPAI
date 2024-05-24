@@ -10,9 +10,7 @@ const ImageDisplay = ({ src, alt }) => {
   };
 
   return (
-    <div className={classes.imageContainer}>
-      <img src={getImageSrc(src)} alt={alt} className={classes.recipeImage} />
-    </div>
+    <img src={getImageSrc(src)} alt={alt} className={classes.recipeImage} />
   );
 };
 

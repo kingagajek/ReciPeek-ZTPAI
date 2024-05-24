@@ -8,6 +8,8 @@
 .slide {
     padding: 16px;
     box-sizing: border-box;
+    text-decoration: none;
+    color: inherit;
   }
   
 @media (max-width: 768px) {

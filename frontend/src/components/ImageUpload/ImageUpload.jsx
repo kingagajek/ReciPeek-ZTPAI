@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classes from './ImageUpload.module.css';
 
-const ImageUpload = ({ onImageChange }) => {
-  const [preview, setPreview] = useState(null);
+const ImageUpload = ({ onImageChange, imagePreviewUrl }) => {
+  const [preview, setPreview] = useState(imagePreviewUrl || null);
+
+  useEffect(() => {
+    if (imagePreviewUrl) {
+      setPreview(imagePreviewUrl);
+    }
+  }, [imagePreviewUrl]);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];

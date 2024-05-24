@@ -5,7 +5,7 @@ import logo from '../../assets/icons/logo.svg';
 export default function Welcome() {
   return (
     <div className={classes.mainContainer}>
-      <a href="/home">
+      <a href="/">
         <img className={classes.logo} src={logo} alt="logo" />
       </a>
       <div className={classes.welcomeMessage}>

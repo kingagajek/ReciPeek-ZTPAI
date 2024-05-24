@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import classes from './Home.module.css';
 import Header from '../../components/Header/Header';
-import SearchBar from '../../components/SearchBar/SearchBar';
 import RecipeGrid from '../../components/RecipeGrid/RecipeGrid';
 
 export default function Home() {
   const [recommendedRecipes, setRecommendedRecipes] = useState([]);
   const [recentRecipes, setRecentRecipes] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -30,10 +31,13 @@ export default function Home() {
     fetchRecipes();
   }, []);
 
+  const handleSearch = (query) => {
+    navigate(`/result?query=${query}`);
+  };
+
   return (
     <>
       <Header />
-      <SearchBar />
       <div className={classes.mainContainer}>
         <div className={classes.recommendedRecipes}>
           <h2 className={classes.recipeGridTitle}>Recommended</h2>
