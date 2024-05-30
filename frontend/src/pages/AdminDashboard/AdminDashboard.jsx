@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-import Header from '../../components/Header/Header';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import AdminTable from '../../components/AdminTable/AdminTable';
 import EditModal from '../../components/EditModal/EditModal';
 import classes from './AdminDashboard.module.css';
+import { useAuth } from '../../context/AuthProvider';
 
 const AdminDashboard = () => {
     const navigate = useNavigate();
+    const { auth } = useAuth();
     const [activeModule, setActiveModule] = useState('users');
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -42,7 +43,11 @@ const AdminDashboard = () => {
                 default:
                     throw new Error('Invalid module');
             }
-            const response = await axios.get(`http://localhost:8080${url}`);
+            const response = await axios.get(`http://localhost:8080${url}`, {
+                headers: {
+                    Authorization: `Bearer ${auth.token}`
+                }
+            });
             return response.data;
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -92,14 +97,13 @@ const AdminDashboard = () => {
                 return [
                     { key: 'id', title: 'ID' },
                     { key: 'title', title: 'Title' },
-                    { key: 'cookTime', title: 'Cook Time' },
-                    { key: 'description', title: 'Description' }
+                    { key: 'createdAt', title: 'Created at', collapsible: true }
                 ];
             default:
                 return [];
         }
     };
-
+        
     const columns = columnsForModule(activeModule);
 
     const handleEditItem = async (id) => {
@@ -107,7 +111,11 @@ const AdminDashboard = () => {
             navigate(`/addRecipe/${id}`);
         } else {
             try {
-                const response = await axios.get(`http://localhost:8080/api/${activeModule}/${id}`);
+                const response = await axios.get(`http://localhost:8080/api/${activeModule}/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${auth.token}`
+                    }
+                });
                 setEditItem(response.data);
                 setShowModal(true);
             } catch (error) {
@@ -141,7 +149,11 @@ const AdminDashboard = () => {
                 default:
                     throw new Error('Invalid module for deletion');
             }
-            await axios.delete(`http://localhost:8080${url}`);
+            await axios.delete(`http://localhost:8080${url}`, {
+                headers: {
+                    Authorization: `Bearer ${auth.token}`
+                }
+            });
             setData(data.filter(item => item.id !== id));
         } catch (error) {
             console.error('Error deleting item:', error);
@@ -234,9 +246,17 @@ const AdminDashboard = () => {
             }
 
             if (editItem.id) {
-                await axios.put(`http://localhost:8080${url}/${editItem.id}`, payload);
+                await axios.put(`http://localhost:8080${url}/${editItem.id}`, payload, {
+                    headers: {
+                        Authorization: `Bearer ${auth.token}`
+                    }
+                });
             } else {
-                await axios.post(`http://localhost:8080${url}`, payload);
+                await axios.post(`http://localhost:8080${url}`, payload, {
+                    headers: {
+                        Authorization: `Bearer ${auth.token}`
+                    }
+                });
             }
 
             setShowModal(false);
@@ -259,7 +279,6 @@ const AdminDashboard = () => {
 
     return (
         <div className={classes.dashboard}>
-            {/* <Header /> */}
             <Sidebar activeModule={activeModule} setActiveModule={setActiveModule} />
             <div className={classes.mainContent}>
                 <AdminTable

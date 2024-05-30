@@ -42,7 +42,11 @@ public class RecipeService {
 
     public Page<RecipeDTO> findAllRecipes(Pageable pageable) {
         return recipeRepository.findAll(pageable)
-                .map(recipeMapper::toDTO);
+                .map(recipe -> {
+                    RecipeDTO dto = recipeMapper.toDTO(recipe);
+                    dto.setCreatedAt(recipe.getCreatedAt());
+                    return dto;
+                });
     }
 
     public RecipeDTO findRecipeById(Integer id) {
@@ -63,6 +67,7 @@ public class RecipeService {
                     .stream()
                     .map(instructionMapper::toDTO)
                     .collect(Collectors.toList()));
+            dto.setCreatedAt(r.getCreatedAt());
             return dto;
         }).orElseThrow(() -> new RuntimeException("Recipe not found with id: " + id));
     }

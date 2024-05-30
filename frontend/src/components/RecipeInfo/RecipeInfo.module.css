@@ -1,67 +1,73 @@
 .recipeInfoContainer {
-    display: flex;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.recipeRating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+  padding: 10px 0;
+}
+
+.starIcon {
+  height: 38px;
+  transition: filter .2s;
+  filter: grayscale(1);
+}
+
+.recipeRatingStars {
+  display: flex;
+  gap: 2px;
+}
+
+.starWrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.starOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 38px;
+  background-color: var(--color-star-fill);
+  z-index: 2;
+  overflow: hidden;
+}
+
+.starOverlay > .starIcon {
+  filter: unset;
+}
+
+.infoDetails {
+  display: flex;
+  width: 100%;
+  max-width: 500px;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.recipeInfoItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.recipeInfoIcon {
+  height: 38px;
+}
+
+@media (max-width: 768px) {
+  .recipeInfoContainer {
     flex-direction: column;
-    width: 100%;
-  }
-  
-  .recipeRating {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    width: fit-content;
-    padding: 10px 0;
-  }
-  
-  .starIcon {
-    height: 38px;
-    transition: filter .2s;
-  }
-    
-  .recipeRatingStars {
-    display: flex;
-    gap: 2px;
+    align-items: flex-start;
   }
 
-  .starWrapper {
-    position: relative;
-    cursor: pointer;
-  }
-
-  .starOverlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 38px;
-    background-color: var(--color-star-fill);
-    z-index: 2;
-  }
-  
   .infoDetails {
-    display: flex;
-    width: 100%;
-    max-width: 500px;
-    justify-content: space-between;
-    padding: 10px 0;
-  }
-  
-  .recipeInfoItem {
-    display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 8px;
   }
-  
-  .recipeInfoIcon {
-    height: 38px;
-  }
-  
-  @media (max-width: 768px) {
-    .recipeInfoContainer {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .infoDetails {
-      flex-direction: column;
-      gap: 8px;
-    }
-  }  
+}

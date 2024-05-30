@@ -34,9 +34,10 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable Integer id, @RequestBody UserDTO userDTO, @AuthenticationPrincipal UserDetails userDetails) {
-        boolean isAdmin = userDetails.getAuthorities().stream()
-                .anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
-        UserDTO updatedUser = userService.updateUser(id, userDTO, isAdmin);
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        UserDTO updatedUser = userService.updateUser(id, userDTO);
         if (updatedUser != null) {
             return ResponseEntity.ok(updatedUser);
         } else {

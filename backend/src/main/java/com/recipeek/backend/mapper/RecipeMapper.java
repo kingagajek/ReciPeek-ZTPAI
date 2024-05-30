@@ -26,6 +26,7 @@ public class RecipeMapper {
         dto.setMealType(new MealTypeDTO(recipe.getMealType().getId(), recipe.getMealType().getName()));
         dto.setCuisine(new CuisineDTO(recipe.getCuisine().getId(), recipe.getCuisine().getName()));
         dto.setDiet(new DietDTO(recipe.getDiet().getId(), recipe.getDiet().getType()));
+        dto.setCreatedAt(recipe.getCreatedAt());
         if (recipe.getRatings() != null) {
             dto.setRatings(recipe.getRatings().stream()
                     .map(ratingMapper::toDTO)
@@ -42,6 +43,7 @@ public class RecipeMapper {
         recipe.setDescription(recipeDTO.getDescription());
         recipe.setCookTime(recipeDTO.getCookTime());
         recipe.setServingSize(recipeDTO.getServingSize());
+        recipe.setCreatedAt(recipeDTO.getCreatedAt());
         if (recipeDTO.getDifficulty() != null) {
             Difficulty difficulty = new Difficulty();
             difficulty.setId(recipeDTO.getDifficulty().getId());

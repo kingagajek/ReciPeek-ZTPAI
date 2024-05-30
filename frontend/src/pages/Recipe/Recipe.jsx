@@ -20,6 +20,7 @@ export default function Recipe() {
   const [nutritionData, setNutritionData] = useState([]);
   const [averageRating, setAverageRating] = useState(null);
   const [ratingCount, setRatingCount] = useState(null);
+  const [userHasRated, setUserHasRated] = useState(false);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -63,20 +64,41 @@ export default function Recipe() {
     fetchAverageRating();
   }, [id]);
 
+  useEffect(() => {
+    const checkUserRating = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/ratings/user/${user.id}/recipe/${id}`);
+        setUserHasRated(response.data.hasRated);
+      } catch (error) {
+        console.error('Error checking user rating', error);
+      }
+    };
+
+    if (user && id) {
+      checkUserRating();
+    }
+  }, [user, id]);
+
   const handleRate = async (rating) => {
     try {
-      const response = await axios.post(
-        'http://localhost:8080/api/ratings',
-        { value: rating, recipeId: id, userId: user.id },
-        {
-          headers: {
-            Authorization: `Bearer ${auth.token}`,
-          },
-        }
-      );
-      const updatedResponse = await axios.get(`http://localhost:8080/api/ratings/average/${id}`);
-      setAverageRating(updatedResponse.data.average);
-      setRatingCount(updatedResponse.data.count);
+      if (!userHasRated) {
+        await axios.post(
+          'http://localhost:8080/api/ratings',
+          { value: rating, recipeId: id, userId: user.id },
+          {
+            headers: {
+              Authorization: `Bearer ${auth.token}`,
+            }
+          }
+        );
+        const updatedResponse = await axios.get(`http://localhost:8080/api/ratings/average/${id}`);
+        setAverageRating(updatedResponse.data.average);
+        setRatingCount(updatedResponse.data.count);
+        setUserHasRated(true);
+      } else {
+        alert('You have already rated this recipe.');
+        return true;
+      }
     } catch (error) {
       console.error('Error rating recipe:', error);
     }

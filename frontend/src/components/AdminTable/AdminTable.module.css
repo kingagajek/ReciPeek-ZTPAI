@@ -2,13 +2,17 @@
     width: 100%;
     margin: 0 auto;
     background-color: var(--color-bg-gradient-light);
-    overflow-x: auto;
     margin: 20px 0;
+}
+
+.tableWrapper {
+    overflow-x: auto;
 }
 
 .table {
     width: 100%;
     min-width: 800px;
+    border-collapse: collapse;
 }
 
 .addButton {
@@ -26,12 +30,14 @@
 .table th, .table td {
     border-bottom: 2px solid var(--color-peach);
     padding: 18px 36px;
+    color: white;
 }
 
 .table th {
     background-color: var(--color-peach);
     color: white;
     font-size: 18px;
+    position: relative;
 }
 
 .table td {
@@ -40,35 +46,65 @@
     text-align: center;
 }
 
-.editButton, .deleteButton {
-    padding: 12px 20px;
+.iconButton {
+    background: none;
     border: none;
-    border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
-    margin-right: 10px;
-}
-
-.editButton {
-    background-color: var(--color-grey-light);
-    color: black;
-}
-
-.deleteButton {
-    background-color: var(--color-peach);
-    color: white;
-}
-
-.editButton:hover {
-    background-color: var(--color-grey-dark);
-}
-
-.deleteButton:hover {
-    background-color: var(--color-peach-light);
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .actionCells {
-    display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.expandButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .table {
+        min-width: 0;
+    }
+
+    .table th, .table td {
+        padding: 12px 24px;
+    }
+
+    .addButton {
+        width: 100%;
+        padding: 10px 0;
+    }
+
+    .iconButton {
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+
+    .actionButtons {
+        display: flex;
+    }
+
+    .actionsColumn, .actionCells {
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .actionCells {
+        display: table-cell;
+    }
+
+    .collapsed {
+        display: none;
+    }
 }

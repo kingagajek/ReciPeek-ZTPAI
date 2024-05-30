@@ -4,9 +4,11 @@ import com.recipeek.backend.dto.RecipeDTO;
 import com.recipeek.backend.dto.UserDTO;
 import com.recipeek.backend.mapper.RecipeMapper;
 import com.recipeek.backend.mapper.UserMapper;
+import com.recipeek.backend.model.Rating;
 import com.recipeek.backend.model.Role;
 import com.recipeek.backend.model.User;
 import com.recipeek.backend.model.UserRecipe;
+import com.recipeek.backend.repository.RatingRepository;
 import com.recipeek.backend.repository.RoleRepository;
 import com.recipeek.backend.repository.UserRecipeRepository;
 import com.recipeek.backend.repository.UserRepository;
@@ -23,6 +25,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserRecipeRepository userRecipeRepository;
+    private final RatingRepository ratingRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
     private final RecipeMapper recipeMapper;
@@ -39,14 +42,12 @@ public class UserService {
         return userMapper.toDTO(savedUser);
     }
 
-    public UserDTO updateUser(Integer id, UserDTO userDTO, boolean isAdmin) {
+    public UserDTO updateUser(Integer id, UserDTO userDTO) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
         existingUser.setEmail(userDTO.getEmail());
         existingUser.setLogin(userDTO.getLogin());
-        if (isAdmin && userDTO.getRole() != null) {
-            existingUser.setRole(userDTO.getRole());
-        }
+        existingUser.setRole(userDTO.getRole());
         User updatedUser = userRepository.save(existingUser);
         return userMapper.toDTO(updatedUser);
     }
@@ -61,6 +62,13 @@ public class UserService {
         if (!userRepository.existsById(id)) {
             throw new RuntimeException("User not found with id: " + id);
         }
+
+        List<Rating> ratings = ratingRepository.findByUserId(id);
+        ratingRepository.deleteAll(ratings);
+
+        List<UserRecipe> userRecipes = userRecipeRepository.findByUserId(id);
+        userRecipeRepository.deleteAll(userRecipes);
+
         userRepository.deleteById(id);
         return true;
     }

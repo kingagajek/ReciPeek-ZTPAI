@@ -23,32 +23,49 @@ export const AuthProvider = ({ children }) => {
               'Authorization': `Bearer ${token}`
             }
           });
+          console.log('Fetched user data in AuthProvider:', response.data);
           setUser(response.data);
-
         } catch (error) {
-          // if (error.response && error.response.status === 403) {
-          //   logout();
-          // } else {
-            console.error('Error fetching user', error);
-          // }
+          console.error('Error fetching user', error);
         }
       }
     };
 
-    fetchUser();
+    if (auth) {
+      fetchUser();
+    }
   }, [auth]);
 
   const login = (data) => {
     localStorage.setItem('token', data.token);
     setAuth(data);
+    axios.get('http://localhost:8080/api/auth/me', {
+      headers: {
+        'Authorization': `Bearer ${data.token}`
+      }
+    }).then(response => {
+      console.log('User data after login in AuthProvider:', response.data);
+      setUser(response.data);
+    }).catch(error => {
+      console.error('Error fetching user after login', error);
+    });
   };
 
   const register = async (login, email, password) => {
     try {
       const response = await axios.post('http://localhost:8080/api/auth/register', { login, email, password });
-      console.log("User registered: ", response.data);
       localStorage.setItem('token', response.data.token);
       setAuth(response.data);
+      axios.get('http://localhost:8080/api/auth/me', {
+        headers: {
+          'Authorization': `Bearer ${response.data.token}`
+        }
+      }).then(response => {
+        console.log('User data after registration in AuthProvider:', response.data);
+        setUser(response.data);
+      }).catch(error => {
+        console.error('Error fetching user after registration', error);
+      });
     } catch (error) {
       console.error('Registration error:', error);
       throw error;

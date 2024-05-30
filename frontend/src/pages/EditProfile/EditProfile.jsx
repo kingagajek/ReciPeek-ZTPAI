@@ -5,6 +5,7 @@ import classes from './EditProfile.module.css';
 import Header from '../../components/Header/Header';
 import FormInput from '../../components/FormInput/FormInput';
 import { useAuth } from '../../context/AuthProvider';
+import { ClipLoader } from 'react-spinners';
 
 export default function EditProfile() {
   const { user, auth } = useAuth();
@@ -17,8 +18,11 @@ export default function EditProfile() {
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log("User:", user);
+    console.log("Auth:", auth);
     if (user && auth) {
       axios.get(`http://localhost:8080/api/users/${user.id}`, {
         headers: {
@@ -26,15 +30,20 @@ export default function EditProfile() {
         }
       })
       .then(response => {
+        console.log("Profile response:", response.data);
         setProfileData({
           ...profileData,
           login: response.data.login,
           email: response.data.email,
         });
+        setLoading(false);
       })
       .catch(error => {
         console.error('Error fetching profile data:', error);
+        setLoading(false);
       });
+    } else {
+      setLoading(false);
     }
   }, [user, auth]);
 
@@ -86,6 +95,14 @@ export default function EditProfile() {
     }
   };
 
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <ClipLoader size={50} color={"#123abc"} loading={true} />
+      </div>
+    );
+  }
+
   return (
     <>
       <Header />
@@ -95,7 +112,7 @@ export default function EditProfile() {
           <div className={classes.profileInfoContainer}>
             <FormInput type="text" placeholder="Login" name="login" value={profileData.login} required onChange={handleChange} />
             <FormInput type="email" placeholder="Email" name="email" value={profileData.email} required onChange={handleChange} />
-            <FormInput type="password" placeholder="Current password" name="currentPassword" onChange={handleChange } className={errors.currentPassword ? classes.noValid : ''}/>
+            <FormInput type="password" placeholder="Current password" name="currentPassword" onChange={handleChange} className={errors.currentPassword ? classes.noValid : ''}/>
             {errors.currentPassword && <span className={classes.errorText}>{errors.currentPassword}</span>}
             <FormInput type="password" placeholder="New password" name="newPassword" onChange={handleChange} className={errors.newPassword ? classes.noValid : ''}/>
             {errors.newPassword && <span className={classes.errorText}>{errors.newPassword}</span>}

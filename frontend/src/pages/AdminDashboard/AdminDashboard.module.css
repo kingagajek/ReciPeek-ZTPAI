@@ -2,6 +2,7 @@
     display: flex;
     width: 100%;
     min-height: 100vh;
+    flex-direction: column;
 }
 
 .mainContent {
@@ -9,4 +10,14 @@
     padding: 20px;
     background-color: var(--color-bg-gradient-light);
     overflow-x: auto; 
+}
+
+@media (min-width: 768px) {
+    .dashboard {
+        flex-direction: row;
+    }
+
+    .mainContent {
+        padding-left: 270px;
+    }
 }

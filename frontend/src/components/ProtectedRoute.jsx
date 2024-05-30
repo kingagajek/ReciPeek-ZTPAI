@@ -1,11 +1,31 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthProvider';
+import { ClipLoader } from 'react-spinners';
 
-const ProtectedRoute = () => {
-  const { auth } = useAuth();
+const ProtectedRoute = ({ roles, child }) => {
+  const { auth, user } = useAuth();
 
-  return auth ? <Outlet /> : <Navigate to="/login" replace />;
+  if (!auth) {
+    return <Navigate to="/welcome" replace />;
+  }
+
+  if (!user) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <ClipLoader size={50} color={"#123abc"} loading={true} />
+      </div>
+    );
+  }
+
+  console.log('User:', user);
+  console.log('Roles:', roles);
+
+  if (roles && (!user.role || !roles.includes(user.role.name))) {
+    return <Navigate to="/" replace />;
+  }
+
+  return child;
 };
 
 export default ProtectedRoute;

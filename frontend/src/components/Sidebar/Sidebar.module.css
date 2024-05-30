@@ -11,6 +11,18 @@
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+@media (min-width: 769px) {
+    .sidebar {
+        transform: translateX(0);
+    }
 }
 
 .profileInfo {
@@ -20,11 +32,10 @@
     margin-bottom: 40px;
 }
 
-.profilePic {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    margin-bottom: 10px;
+.logo {
+    height: 55px;
+    margin-bottom: 30px;
+    cursor: pointer;
 }
 
 .profileName {
@@ -52,4 +63,20 @@
 
 .navLinks li.active {
     background-color: var(--color-peach);
+}
+
+.menuIcon {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    cursor: pointer;
+    color: white;
+    z-index: 1100;
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .menuIcon {
+        display: block;
+    }
 }

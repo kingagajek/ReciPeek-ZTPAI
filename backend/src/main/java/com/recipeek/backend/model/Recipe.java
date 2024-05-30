@@ -39,7 +39,8 @@ public class Recipe {
     @JoinColumn(name = "id_cuisine", referencedColumnName = "id")
     private Cuisine cuisine;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
+    @CreatedDate
     private LocalDateTime createdAt = LocalDateTime.now();
     private Date updatedAt;
     @ManyToOne

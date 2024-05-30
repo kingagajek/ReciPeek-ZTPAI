@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -22,6 +23,7 @@ public class RecipeDTO {
     private CuisineDTO cuisine;
     private DietDTO diet;
     private byte[] pictureUrl;
+    private LocalDateTime createdAt;
     private List<RecipeIngredientDTO> ingredients;
     private List<InstructionDTO> instructions;
     private List<NutritionDTO> nutrition;
