@@ -25,7 +25,7 @@ const RecipeInfo = ({ cookTime, level, servingSize, rating, ratingCount, onRate,
 
   const handleClick = (index) => {
     if (isLoggedIn) {
-      const hasUserRated = onRate(index);
+      const hasUserRated = onRate(index + 1);
 
       if (!hasUserRated) setCurrentRating(index);
     }
@@ -60,7 +60,7 @@ const RecipeInfo = ({ cookTime, level, servingSize, rating, ratingCount, onRate,
             </div>
           ))}
         </div>
-        <span>{currentRating.toFixed(1)}
+        <span>{currentRating?.toFixed(1)}
         {showRatingCount && <> {` (${ratingCount} ratings)`}</>}
         </span>
       </div>

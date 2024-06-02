@@ -1,20 +1,54 @@
 .recipeGrid {
-    width: 100%;
-    padding: 0 80px;
-    max-width: 1200px;
+    width: calc(100% + 80px);
+    margin-left: -40px;
+    padding: 0 40px;
     overflow: hidden;
-}
-
-.slide {
-    padding: 16px;
+  }
+  
+  .slide {
     box-sizing: border-box;
     text-decoration: none;
     color: inherit;
   }
   
-@media (max-width: 768px) {
+  .arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 2;
+  }
+  
+  .arrow.next {
+    right: 0;
+  }
+  
+  .arrow.prev {
+    left: 0;
+  }
+  
+  .arrow span {
+    font-size: 24px;
+  }
+  
+  @media (max-width: 768px) {
     .recipeGrid {
-        gap: 10px;
-        padding: 0 60px;
+      padding: 0 20px;
     }
-}
+    .arrow {
+      width: 30px;
+      height: 30px;
+    }
+    .arrow span {
+      font-size: 18px;
+    }
+  }
+  

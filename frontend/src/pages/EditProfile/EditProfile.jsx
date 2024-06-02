@@ -6,9 +6,11 @@ import Header from '../../components/Header/Header';
 import FormInput from '../../components/FormInput/FormInput';
 import { useAuth } from '../../context/AuthProvider';
 import { ClipLoader } from 'react-spinners';
+import { useNavigate } from 'react-router-dom';
 
 export default function EditProfile() {
-  const { user, auth } = useAuth();
+  const { user, auth, logout } = useAuth();
+  const navigate = useNavigate();
   const [profileData, setProfileData] = useState({
     login: '',
     email: '',
@@ -21,8 +23,6 @@ export default function EditProfile() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("User:", user);
-    console.log("Auth:", auth);
     if (user && auth) {
       axios.get(`http://localhost:8080/api/users/${user.id}`, {
         headers: {
@@ -30,7 +30,6 @@ export default function EditProfile() {
         }
       })
       .then(response => {
-        console.log("Profile response:", response.data);
         setProfileData({
           ...profileData,
           login: response.data.login,
@@ -95,6 +94,27 @@ export default function EditProfile() {
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
+  const handleDeleteAccount = async () => {
+    if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+      try {
+        await axios.delete(`http://localhost:8080/api/users/${user.id}`, {
+          headers: {
+            'Authorization': `Bearer ${auth.token}`
+          }
+        });
+        logout();
+        navigate('/');
+      } catch (error) {
+        console.error('Error deleting account:', error);
+      }
+    }
+  };
+
   if (loading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -122,8 +142,8 @@ export default function EditProfile() {
 
           <div className={classes.profileActions}>
             <button type="submit" name="save_profile" onClick={handleSubmit}>Save</button>
-            <a className={classes.signOut} href="/logout">Sign out</a>
-            <button type="submit" name="delete_account" className={classes.deleteAccount}>Delete Account</button>
+            <button className={classes.signOut} onClick={handleLogout}>Sign out</button>
+            <button type="button" name="delete_account" className={classes.deleteAccount} onClick={handleDeleteAccount}>Delete Account</button>
           </div>
         </section>
       </main>

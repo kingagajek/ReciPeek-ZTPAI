@@ -10,8 +10,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/recipes")
@@ -23,10 +26,16 @@ public class RecipeController {
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "20") int size,
             @RequestParam(name = "sort", defaultValue = "id") String sortBy,
-            @RequestParam(name = "order", defaultValue = "asc") String order) {
+            @RequestParam(name = "order", defaultValue = "asc") String order,
+            @RequestParam(name = "mealType", required = false) List<Integer> mealTypeIds,
+            @RequestParam(name = "difficulty", required = false) List<Integer> difficultyIds,
+            @RequestParam(name = "diet", required = false) List<Integer> dietIds,
+            @RequestParam(name = "cuisine", required = false) List<Integer> cuisineIds,
+            @RequestParam(name = "time", required = false) List<String> times,
+            @RequestParam(name = "rating", required = false) List<String> ratings) {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sortBy));
-        Page<RecipeDTO> recipes = recipeService.findAllRecipes(pageable);
+        Page<RecipeDTO> recipes = recipeService.findAllRecipes(pageable, mealTypeIds, difficultyIds, dietIds, cuisineIds, times, ratings);
         return ResponseEntity.ok(recipes);
     }
 
@@ -36,10 +45,16 @@ public class RecipeController {
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "20") int size,
             @RequestParam(name = "sort", defaultValue = "id") String sortBy,
-            @RequestParam(name = "order", defaultValue = "asc") String order) {
+            @RequestParam(name = "order", defaultValue = "asc") String order,
+            @RequestParam(name = "mealType", required = false) List<Integer> mealTypeIds,
+            @RequestParam(name = "difficulty", required = false) List<Integer> difficultyIds,
+            @RequestParam(name = "diet", required = false) List<Integer> dietIds,
+            @RequestParam(name = "cuisine", required = false) List<Integer> cuisineIds,
+            @RequestParam(name = "time", required = false) List<String> times,
+            @RequestParam(name = "rating", required = false) List<String> ratings) {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sortBy));
-        Page<RecipeDTO> recipes = recipeService.searchRecipes(query, pageable);
+        Page<RecipeDTO> recipes = recipeService.searchRecipes(query, pageable, mealTypeIds, difficultyIds, dietIds, cuisineIds, times, ratings);
         return ResponseEntity.ok(recipes);
     }
 
@@ -49,14 +64,15 @@ public class RecipeController {
     }
 
     @PostMapping
-    public ResponseEntity<Integer> addRecipe(@RequestBody RecipeRequest recipeRequest) {
-        Integer savedRecipeId = recipeService.saveRecipe(recipeRequest);
+    public ResponseEntity<Integer> addRecipe(@RequestBody RecipeRequest recipeRequest, @AuthenticationPrincipal UserDetails userDetails) {
+        Integer savedRecipeId = recipeService.saveRecipe(recipeRequest, userDetails.getUsername());
         return ResponseEntity.ok(savedRecipeId);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RecipeDTO> updateRecipe(@PathVariable Integer id, @RequestBody RecipeDTO recipeDTO) {
-        return ResponseEntity.ok(recipeService.updateRecipe(id, recipeDTO));
+    public ResponseEntity<Integer> updateRecipe(@PathVariable Integer id, @RequestBody RecipeRequest recipeRequest, @AuthenticationPrincipal UserDetails userDetails) {
+        Integer updatedRecipeId = recipeService.updateRecipe(id, recipeRequest);
+        return ResponseEntity.ok(updatedRecipeId);
     }
 
     @DeleteMapping("/{id}")
@@ -77,7 +93,7 @@ public class RecipeController {
     @GetMapping("/recommended")
     public ResponseEntity<Page<RecipeDTO>> getRecommendedRecipes(
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "5") int size) {
+            @RequestParam(name = "size", defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "views"));
         Page<RecipeDTO> recipes = recipeService.findRecommendedRecipes(pageable);
         return ResponseEntity.ok(recipes);
@@ -86,7 +102,7 @@ public class RecipeController {
     @GetMapping("/recent")
     public ResponseEntity<Page<RecipeDTO>> getRecentRecipes(
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "5") int size) {
+            @RequestParam(name = "size", defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         Page<RecipeDTO> recipes = recipeService.findRecentRecipes(pageable);
         return ResponseEntity.ok(recipes);

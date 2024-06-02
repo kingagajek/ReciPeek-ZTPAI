@@ -16,6 +16,7 @@
     display: flex;
     gap: 15px;
     margin: 20px 0;
+    flex-wrap: wrap;
 }
 
 .infoSelect {
@@ -46,4 +47,16 @@
     border-radius: 4px;
     resize: none;
     font-weight: 400;
+}
+
+@media (max-width: 768px) {
+    .mainInfoText {
+        gap: 10px;
+        padding: 0;
+    }
+
+    .recipeInfo {
+        gap: 10px;
+        flex-direction: column;
+    }
 }

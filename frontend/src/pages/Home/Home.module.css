@@ -5,14 +5,23 @@
     flex-direction: column;
     padding: 28px 0;
     color: white;
-    gap: 24px;
+    gap: 40px;
 }
 
 .recommendedRecipes, .recentRecipes {
     width: 100%;
+    max-width: 1600px;
+    padding: 0 150px;
 }
 
 .recipeGridTitle {
     font-weight: 700;
     margin: 24px;
+}
+
+@media (max-width: 768px) {
+.recommendedRecipes, .recentRecipes {
+        gap: 10px;
+        padding: 0 60px;
+    }
 }

@@ -18,8 +18,6 @@ const MyRecipes = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("User:", user);
-    console.log("Auth:", auth);
     const fetchRecipes = async () => {
       if (user && auth) {
         try {
@@ -28,14 +26,11 @@ const MyRecipes = () => {
               'Authorization': `Bearer ${auth.token}`
             }
           });
-          console.log("Recipes response:", response.data);
           const recipesData = response.data;
 
           if (Array.isArray(recipesData)) {
-            const recipesWithNutrition = await addNutritionToRecipes(recipesData);
-            setRecipes(recipesWithNutrition);
-            const recipesWithRating = await addRatingToRecipes(recipesData);
-            setRecipes(recipesWithRating);
+            const recipesWithDetails = await addDetailsToRecipes(recipesData);
+            setRecipes(recipesWithDetails);
           } else {
             setRecipes([]);
           }
@@ -52,6 +47,11 @@ const MyRecipes = () => {
     fetchRecipes();
   }, [user, auth]);
 
+  const addDetailsToRecipes = async (recipes) => {
+    const recipesWithNutrition = await addNutritionToRecipes(recipes);
+    return addRatingToRecipes(recipesWithNutrition);
+  };
+
   const addNutritionToRecipes = async (recipes) => {
     return Promise.all(recipes.map(async (recipe) => {
       try {
@@ -60,7 +60,6 @@ const MyRecipes = () => {
             'Authorization': `Bearer ${auth.token}`
           }
         });
-        console.log(`Nutrition for recipe ${recipe.id}:`, nutritionResponse.data);
         return { ...recipe, nutrition: nutritionResponse.data };
       } catch (error) {
         console.error(`Error fetching nutrition data for recipe ${recipe.id}`, error);
@@ -77,7 +76,6 @@ const MyRecipes = () => {
             'Authorization': `Bearer ${auth.token}`
           }
         });
-        console.log(`Ratig for recipe ${recipe.id}:`, ratingResponse.data.average);
         return { ...recipe, rating: ratingResponse.data.average };
       } catch (error) {
         console.error(`Error fetching rating data for recipe ${recipe.id}`, error);
@@ -122,7 +120,7 @@ const MyRecipes = () => {
   return (
     <div className={classes.myRecipesContainer}>
       <Header />
-      <button className="buttonBgGradient" onClick={handleAddNew}>Add New Recipe</button>
+      <button className={`buttonBgGradient ${classes.addNewRecipeButton}`} onClick={handleAddNew}>Add New Recipe</button>
       <div className={classes.recipeList}>
         {recipes.map(recipe => (
           <div key={recipe.id} className={classes.recipeCard} onClick={() => navigate(`/recipe/${recipe.id}`)}>

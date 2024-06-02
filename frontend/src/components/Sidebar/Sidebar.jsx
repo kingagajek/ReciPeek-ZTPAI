@@ -19,7 +19,7 @@ const Sidebar = ({ activeModule, setActiveModule }) => {
             </div>
             <div className={`${classes.sidebar} ${isOpen ? classes.open : ''}`}>
                 <div className={classes.profileInfo}>
-                    <img src={logo} alt="Logo" className={classes.logo} />
+                    <a href="/"><img src={logo} alt="Logo" className={classes.logo} /></a>
                     <p className={classes.profileName}>Admin</p>
                 </div>
                 <ul className={classes.navLinks}>

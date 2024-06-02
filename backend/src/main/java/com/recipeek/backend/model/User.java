@@ -27,7 +27,7 @@ public class User implements UserDetails {
     private Integer id;
 
     private String email;
-    private String password; //TODO: HASHOWANIE
+    private String password;
     private String login;
 
     @ManyToOne

@@ -18,9 +18,6 @@ const ProtectedRoute = ({ roles, child }) => {
     );
   }
 
-  console.log('User:', user);
-  console.log('Roles:', roles);
-
   if (roles && (!user.role || !roles.includes(user.role.name))) {
     return <Navigate to="/" replace />;
   }

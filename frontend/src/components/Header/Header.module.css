@@ -11,10 +11,11 @@ header {
 }
 
 .logo {
-    height: 35px;
+    height: 60px;
 }
 
-.profile, .myRecipesIcon {
+.profile, .myRecipesIcon, .dashboardIcon {
+    cursor: pointer;
     filter: invert(1);
     height: 35px;
 }

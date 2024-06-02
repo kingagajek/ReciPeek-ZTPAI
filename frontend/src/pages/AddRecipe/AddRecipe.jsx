@@ -54,7 +54,7 @@ export default function AddRecipe() {
   }, [id, auth.token]);
 
   useEffect(() => {
-    if (id && recipeData) {
+    if (id && recipeData && !recipeData.nutrition) {
       const fetchNutrition = async () => {
         try {
           const response = await axios.get(`http://localhost:8080/api/recipes/${id}/nutrition`, {
@@ -89,9 +89,30 @@ export default function AddRecipe() {
       instructions: recipeData.instructions.map(ins => ({ stepNumber: ins.stepNumber, description: ins.description }))
     };
 
+    formattedData.mealTypeId = formattedData.mealType.id
+    delete formattedData.mealType
+
+    formattedData.difficultyId = formattedData.difficulty.id
+    delete formattedData.difficulty
+
+    formattedData.cuisineId = formattedData.cuisine.id
+    delete formattedData.cuisine
+
+    formattedData.dietId = formattedData.diet.id
+    delete formattedData.diet
+
+    formattedData.ingredients = formattedData.ingredients.map(item => ({
+        ingredientId: item.ingredient.id,
+        quantity: item.quantity,
+        measurement: item.measurement
+    }));
+
+    delete formattedData.ratings
+    delete formattedData.createdAt
     try {
       let response;
       if (id) {
+        console.log(formattedData)
         response = await axios.put(`http://localhost:8080/api/recipes/${id}`, formattedData, {
           headers: {
             'Authorization': `Bearer ${auth.token}`

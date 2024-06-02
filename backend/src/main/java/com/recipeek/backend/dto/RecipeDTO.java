@@ -28,4 +28,5 @@ public class RecipeDTO {
     private List<InstructionDTO> instructions;
     private List<NutritionDTO> nutrition;
     private List<RatingDTO> ratings;
+    private Double averageRating;
 }

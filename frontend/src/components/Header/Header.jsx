@@ -13,8 +13,6 @@ export default function Header() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  console.log("User in Header:", user);
-
   const handleSearch = (query) => {
     navigate(`/result?query=${query}`);
   };

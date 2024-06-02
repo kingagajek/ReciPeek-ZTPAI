@@ -64,4 +64,13 @@ public class RatingService {
         int count = ratings.size();
         return Map.of("average", average, "count", count);
     }
+
+    public Map<Integer, Double> getAverageRatingsForAllRecipes() {
+        List<Rating> ratings = ratingRepository.findAll();
+        return ratings.stream()
+                .collect(Collectors.groupingBy(
+                        rating -> rating.getRecipe().getId(),
+                        Collectors.averagingDouble(Rating::getValue)
+                ));
+    }
 }

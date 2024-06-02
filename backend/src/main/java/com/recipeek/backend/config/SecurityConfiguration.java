@@ -45,7 +45,8 @@ public class SecurityConfiguration {
                             "/api/diets/**",
                             "/api/cuisines/**",
                             "/api/auth/**",
-                            "/api/ratings/**"
+                            "/api/ratings/**",
+                            "/api/filters/**"
                     )
                     .permitAll()
                     .requestMatchers(

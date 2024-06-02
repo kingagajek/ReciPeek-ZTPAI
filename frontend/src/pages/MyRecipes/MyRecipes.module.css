@@ -4,15 +4,7 @@
     min-height: 100vh;
 }
 
-.addButton {
-    background-color: var(--color-peach);
-    border: none;
-    border-radius: 8px;
-    color: white;
-    padding: 12px 24px;
-    font-size: 16px;
-    cursor: pointer;
-    display: block;
+.addNewRecipeButton {
     margin: 0 auto 20px;
 }
 
@@ -20,7 +12,9 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    max-width: 1350px;
+    max-width: 1600px;
+    padding: 0 120px;
+    margin: 0 auto;
 }
 
 .recipeCard {
@@ -59,4 +53,23 @@
 
 .iconButton:hover {
     color: var(--color-peach-dark);
+}
+
+@media (max-width: 768px) {
+    .recipeList {
+        padding: 0 15px;
+    }
+
+    .recipeCard {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .mainInfoText {
+        padding: 5px 0;
+    }
+
+    .iconButton {
+        font-size: 18px;
+    }
 }

@@ -23,7 +23,6 @@ export const AuthProvider = ({ children }) => {
               'Authorization': `Bearer ${token}`
             }
           });
-          console.log('Fetched user data in AuthProvider:', response.data);
           setUser(response.data);
         } catch (error) {
           console.error('Error fetching user', error);
@@ -44,7 +43,6 @@ export const AuthProvider = ({ children }) => {
         'Authorization': `Bearer ${data.token}`
       }
     }).then(response => {
-      console.log('User data after login in AuthProvider:', response.data);
       setUser(response.data);
     }).catch(error => {
       console.error('Error fetching user after login', error);
@@ -61,7 +59,6 @@ export const AuthProvider = ({ children }) => {
           'Authorization': `Bearer ${response.data.token}`
         }
       }).then(response => {
-        console.log('User data after registration in AuthProvider:', response.data);
         setUser(response.data);
       }).catch(error => {
         console.error('Error fetching user after registration', error);

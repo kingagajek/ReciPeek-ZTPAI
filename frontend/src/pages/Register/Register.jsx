@@ -34,14 +34,12 @@ export default function Register() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
-      console.log('Form submitted', values);
       try {
         const response = await axios.post('http://localhost:8080/api/auth/register', {
           login: values.login,
           email: values.email,
           password: values.password,
         });
-        console.log('Registration successful:', response.data);
         navigate('/login');
       } catch (error) {
         console.error('Error during registration:', error);

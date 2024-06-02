@@ -2,19 +2,8 @@ import React, { useState } from 'react';
 import classes from './AdminTable.module.css';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 const AdminTable = ({ data, columns, onEdit, onDelete, addNewText, onAddNew }) => {
-    const [expandedColumns, setExpandedColumns] = useState({});
-
-    const toggleColumn = (key) => {
-        setExpandedColumns(prevState => ({
-            ...prevState,
-            [key]: !prevState[key]
-        }));
-    };
-
     return (
         <div className={classes.tableContainer}>
             {addNewText && (
@@ -40,7 +29,7 @@ const AdminTable = ({ data, columns, onEdit, onDelete, addNewText, onAddNew }) =
                                 {columns.map(col => (
                                     <td
                                         key={col.key}
-                                        className={`${classes.column} ${col.collapsible && !expandedColumns[col.key] ? classes.collapsed : ''}`}
+                                        className={classes.column}
                                     >
                                         {item[col.key]}
                                     </td>

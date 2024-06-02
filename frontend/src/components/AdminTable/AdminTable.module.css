@@ -103,8 +103,4 @@
     .actionCells {
         display: table-cell;
     }
-
-    .collapsed {
-        display: none;
-    }
 }

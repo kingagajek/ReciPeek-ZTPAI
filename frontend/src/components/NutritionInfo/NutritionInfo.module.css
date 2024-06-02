@@ -8,19 +8,19 @@
   padding: 10px 0;
 }
 
-  .nutritionDetails {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
+.nutritionDetails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
   
-  .nutritionItem {
+.nutritionItem {
     display: flex;
     flex-direction: column;
     gap: 10px;
     text-align: center;
     justify-content: space-between;
-    min-width: 100px;
+    min-width: 90px;
     width: calc((65% - 70px) / 8);
     background-color: #e0e0e0;
     padding: 5px 10px;
