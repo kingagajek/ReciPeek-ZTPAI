@@ -28,9 +28,8 @@ export default function SearchBar({ onSearch }) {
         placeholder="Search recipe"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
       />
-      <div className={classes.dropdownContainer}>
+      {/* <div className={classes.dropdownContainer}>
         <select
           id="search-type"
           name="search-type"
@@ -40,7 +39,7 @@ export default function SearchBar({ onSearch }) {
           <option value="by_recipe">By recipe</option>
           <option value="by_ingredients">By ingredients</option>
         </select>
-      </div>
+      </div> */}
     </div>
   );
 }

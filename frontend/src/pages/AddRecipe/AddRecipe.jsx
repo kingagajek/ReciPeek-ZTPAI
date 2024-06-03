@@ -112,7 +112,6 @@ export default function AddRecipe() {
     try {
       let response;
       if (id) {
-        console.log(formattedData)
         response = await axios.put(`http://localhost:8080/api/recipes/${id}`, formattedData, {
           headers: {
             'Authorization': `Bearer ${auth.token}`

@@ -25,7 +25,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
-
+    private final EmailProducer emailProducer;
 
     public AuthenticationResponse register(RegisterRequest request) {
         if (request.getPassword().length() < 8) {
@@ -52,6 +52,9 @@ public class AuthenticationService {
         userRepository.save(user);
 
         var jwtToken = jwtService.generateToken(user);
+
+        emailProducer.sendEmailMessage(user.getEmail());
+
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
