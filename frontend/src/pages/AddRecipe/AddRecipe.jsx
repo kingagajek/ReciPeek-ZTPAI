@@ -89,26 +89,41 @@ export default function AddRecipe() {
       instructions: recipeData.instructions.map(ins => ({ stepNumber: ins.stepNumber, description: ins.description }))
     };
 
-    formattedData.mealTypeId = formattedData.mealType.id
-    delete formattedData.mealType
-
-    formattedData.difficultyId = formattedData.difficulty.id
-    delete formattedData.difficulty
-
-    formattedData.cuisineId = formattedData.cuisine.id
-    delete formattedData.cuisine
-
-    formattedData.dietId = formattedData.diet.id
-    delete formattedData.diet
-
-    formattedData.ingredients = formattedData.ingredients.map(item => ({
-        ingredientId: item.ingredient.id,
+    if (formattedData.mealTypeId.id) {
+      formattedData.mealTypeId = formattedData.mealType.id;
+      delete formattedData.mealType;
+    }
+    
+    if (formattedData.difficultyId.id) {
+      formattedData.difficultyId = formattedData.difficulty.id;
+      delete formattedData.difficulty;
+    }
+    
+    if (formattedData.cuisineId.id) {
+      formattedData.cuisineId = formattedData.cuisine.id;
+      delete formattedData.cuisine;
+    }
+    
+    if (formattedData.dietId.id) {
+      formattedData.dietId = formattedData.diet.id;
+      delete formattedData.diet;
+    }
+    
+    formattedData.ingredients = formattedData.ingredients.map(item => {
+      if (item.ingredient) {
+        item.ingredientId = item.ingredient.id;
+        delete item.ingredient;
+      }
+      return {
+        ingredientId: item.ingredientId,
         quantity: item.quantity,
         measurement: item.measurement
-    }));
+      };
+    });
+    
+    delete formattedData.ratings;
+    delete formattedData.createdAt;
 
-    delete formattedData.ratings
-    delete formattedData.createdAt
     try {
       let response;
       if (id) {
